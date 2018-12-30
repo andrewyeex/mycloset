@@ -1,0 +1,26 @@
+body {
+  // background: black;
+}
+
+#main {
+  background: white;
+  margin: 0 auto;
+  height: 100vh;
+  max-width: 1200px;
+  h1 {
+    text-align: center;
+  }
+}
+
+div.topBar {
+  margin-bottom: 10px;
+}
+div.userIcon {
+  text-align: right;
+}
+div.title {
+  text-align: center;
+}
+div.main-content {
+  background: red;
+}
