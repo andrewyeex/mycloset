@@ -1,14 +1,12 @@
 .filter-pills-container {
-  height: 100%;
-  div.filter-helpers {
+  height: 100%; }
+  .filter-pills-container div.filter-helpers {
     display: flex;
     width: 100%;
-    padding: 10px 0px;
-    div.btn {
-      width: 100%;
-    }
-  }
-  div.filter-pills {
+    padding: 10px 0px; }
+    .filter-pills-container div.filter-helpers div.btn {
+      width: 100%; }
+  .filter-pills-container div.filter-pills {
     border: 1px solid black;
     width: 150px;
     float: left;
@@ -22,16 +20,13 @@
     -webkit-transition: .1s;
     -moz-transition: .1s;
     -ms-transition: .1s;
-    -o-transition: .1s;
-}
-  div.filter-pills:hover {
-    cursor: pointer;
-  }
-  div.filter-pills.active {
+    -o-transition: .1s; }
+  .filter-pills-container div.filter-pills:hover {
+    cursor: pointer; }
+  .filter-pills-container div.filter-pills.active {
     background: #6d3474;
-    color: white;
-  }
-  #CLEAR {
+    color: white; }
+  .filter-pills-container #CLEAR {
     width: 100%;
     background: #ff0065;
     color: white;
@@ -45,13 +40,9 @@
     -webkit-transition: .2s;
     -moz-transition: .2s;
     -ms-transition: .2s;
-    -o-transition: .2s;
-}
-  #CLEAR:hover {
-    cursor: pointer;
-  }
-  #CLEAR:active {
+    -o-transition: .2s; }
+  .filter-pills-container #CLEAR:hover {
+    cursor: pointer; }
+  .filter-pills-container #CLEAR:active {
     background: #ce6d94;
-    color: white;
-  }
-}
+    color: white; }

@@ -1,8 +1,10 @@
 import * as React from 'react';
+import './menu.css'
 
 interface MenuProps {
-  name?: string;
-  types: [];
+  filters               : string[];
+  handleFilterSelected  : (id: string) => void;
+  handleClearSelected   : () => void;
 }
 
 interface MenuState {
@@ -11,13 +13,33 @@ interface MenuState {
 
 class Menu extends React.PureComponent< MenuProps, MenuState > {
   public static defaultProps = {
-    types: ["SHOES"]
+    filters: ["SHOES"]
   }
 
   public render() {
-    const { types } = this.props
+    const { filters } = this.props
     return(
-      <div>{types.map((type, i) => <div key={i}>{type}</div>)}</div>
+      <div className="filter-pills-container">
+        <div>
+          {
+            filters.map( (filter, i) => {
+              const isSelected = this.props[`is${filter[0] + filter.substr(1).toLocaleLowerCase()}Selected`]
+              return(
+                <div
+                  id={filter}
+                  key={filter}
+                  onClick={() => this.props.handleFilterSelected(filter)}
+                  className={`filter-pills ${isSelected ? 'active' : 'inactive'}`} >
+                  {filter}
+                </div>
+              )
+            })
+          }
+        </div>
+        <div className="filter-helpers" >
+          <div id="CLEAR" onClick={this.props.handleClearSelected} >CLEAR</div>
+        </div>
+      </div>
     );
   }
 

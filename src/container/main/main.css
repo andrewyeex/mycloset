@@ -5,15 +5,33 @@
   max-width: 1200px; }
   #main h1 {
     text-align: center; }
-
-div.topBar {
-  margin-bottom: 10px; }
-
-div.userIcon {
-  text-align: right; }
-
-div.title {
-  text-align: center; }
-
-div.main-content {
-  background: red; }
+  #main div.top-bar, #main div.menu {
+    margin-bottom: 10px; }
+  #main div.menu {
+    margin-top: 15px; }
+  #main div.top-bar {
+    border-bottom: 5px solid black; }
+  #main div.user-icon {
+    text-align: right; }
+  #main div.title {
+    text-align: center; }
+  #main div.main-content {
+    margin: 20px 0px; }
+    #main div.main-content .clothe-card {
+      border: 1px solid;
+      border-radius: 15px;
+      padding: 10px;
+      margin: 5px;
+      height: 350px;
+      width: 225px;
+      align-items: center;
+      justify-content: center;
+      display: flex; }
+    #main div.main-content .clothe-card:hover {
+      cursor: pointer; }
+    #main div.main-content .clothe-card:active {
+      opacity: .5; }
+    #main div.main-content .clothe-card.add {
+      background: #f1f1f1; }
+      #main div.main-content .clothe-card.add img {
+        height: 40px; }
