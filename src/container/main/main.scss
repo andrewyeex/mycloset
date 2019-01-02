@@ -2,7 +2,7 @@
   background: white;
   margin: 0 auto;
   height: 100vh;
-  max-width: 1200px;
+  max-width: 1280px;
   h1 {
     text-align: center;
   }
@@ -19,6 +19,15 @@
   }
   div.main-content {
     margin: 20px 0px;
+    .card-container{ width: 100%; }
+    .clothe-card-overlay {
+      z-index: 1;
+      height: inherit;
+      width: inherit;
+      position: absolute;
+      border-radius: inherit;
+    }
+    .clothe-card-overlay:hover { background: #00000080; }
     .clothe-card {
       border: 1px solid;
       border-radius: 15px;
@@ -26,9 +35,14 @@
       margin: 5px;
       height: 350px;
       width: 225px;
-      align-items: center;
-      justify-content: center;
       display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      float: left;
+      img {
+        max-height: 110%;
+      }
     }
     .clothe-card:hover { cursor: pointer; }
     .clothe-card:active { opacity: .5; }

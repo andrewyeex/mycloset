@@ -26,7 +26,8 @@ interface Props {
 }
 
 interface State {
-  [x: string]           : boolean; // this statement applies the rule that all state properties are booleans ?
+  data                  : [] | never[];
+  [x: string]           : boolean | object; // this statement applies the rule that all state properties are booleans ?
   isHamburgerOpen       : boolean;
   isUserSettingPageOpen : boolean;
   isAddNewClothesPageOpen: boolean;
@@ -40,10 +41,15 @@ interface State {
   isHoodiesSelected     : boolean;
   isShortsSelected      : boolean;
   isHeadwearSelected    : boolean;
+
+}
+
+interface ClothingObject {
+  clothing_type : string;
 }
 
 export default class Main extends React.Component<Props, State> {
-  constructor(props: object){
+  constructor(props: Props){
     super(props)
     this.state = {
       isHamburgerOpen       : false,
@@ -58,7 +64,35 @@ export default class Main extends React.Component<Props, State> {
       isSweatersSelected    : false,
       isHoodiesSelected     : false,
       isShortsSelected      : false,
-      isHeadwearSelected    : false
+      isHeadwearSelected    : false,
+      data                  : []
+    }
+  }
+
+  public componentDidUpdate = (prevProps: Props, prevState: State) => {
+    const {
+      isShoesSelected,
+      isPantsSelected
+    } = this.state
+    if((prevState.isShoesSelected !== isShoesSelected) && isShoesSelected){
+      fetch('http://localhost:4000/clothings/type/shoes',{
+        method: 'GET'
+      }).then(response => response.json())
+      .then(data => this.setState({ data: data.data }))
+    }
+    if((prevState.isShoesSelected !== isShoesSelected) && !isShoesSelected){
+      const data = (this.state.data).filter( (d:ClothingObject) => d.clothing_type !== 'shoes')
+      this.setState({ data })
+    }
+    if((prevState.isPantsSelected !== isPantsSelected) && isPantsSelected){
+      fetch('http://localhost:4000/clothings/type/pants',{
+        method: 'GET'
+      }).then(response => response.json())
+      .then(data => this.setState({ data: data.data }))
+    }
+    if((prevState.isPantsSelected !== isPantsSelected) && !isPantsSelected){
+      const data = (this.state.data).filter( (d:ClothingObject) => d.clothing_type !== 'pants')
+      this.setState({ data })
     }
   }
 
@@ -80,7 +114,8 @@ export default class Main extends React.Component<Props, State> {
     isSweatersSelected    : false,
     isHoodiesSelected     : false,
     isShortsSelected      : false,
-    isHeadwearSelected    : false
+    isHeadwearSelected    : false,
+    data                  : []
   })
 
   public render(){
@@ -146,6 +181,22 @@ export default class Main extends React.Component<Props, State> {
             <div className="row main-content">
               <div className="card-container">
                 {/* <div className="clothe-card">CLOTHINGS</div> */}
+                {(this.state.data).map( clothing => {
+                  const {
+                    id,
+                    image,
+                    clothing_type
+                  } = clothing
+                  return (
+                    <div
+                      key={id}
+                      className="clothe-card"
+                      onClick={this.handleOpenAddNewClothesPage}>
+                      <img src={`${process.env.PUBLIC_URL}/${clothing_type}/${image}`} alt="Add New Clothes" />
+                      <div className="clothe-card-overlay" />
+                    </div>
+                  )
+                })}
                 <div
                   className="clothe-card add"
                   onClick={this.handleOpenAddNewClothesPage}>
