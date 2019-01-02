@@ -25,9 +25,14 @@ interface Props {
   name?: string;
 }
 
+interface clothing {
+  id        : number;
+  image     : string;
+  clothing_type: string;
+}
+
 interface State {
-  data                  : [] | never[];
-  [x: string]           : boolean | object; // this statement applies the rule that all state properties are booleans ?
+  data                  : Array<clothing>;
   isHamburgerOpen       : boolean;
   isUserSettingPageOpen : boolean;
   isAddNewClothesPageOpen: boolean;
@@ -42,10 +47,6 @@ interface State {
   isShortsSelected      : boolean;
   isHeadwearSelected    : boolean;
 
-}
-
-interface ClothingObject {
-  clothing_type : string;
 }
 
 export default class Main extends React.Component<Props, State> {
@@ -74,26 +75,30 @@ export default class Main extends React.Component<Props, State> {
       isShoesSelected,
       isPantsSelected
     } = this.state
-    if((prevState.isShoesSelected !== isShoesSelected) && isShoesSelected){
-      fetch('http://localhost:4000/clothings/type/shoes',{
-        method: 'GET'
-      }).then(response => response.json())
-      .then(data => this.setState({ data: data.data }))
-    }
-    if((prevState.isShoesSelected !== isShoesSelected) && !isShoesSelected){
-      const data = (this.state.data).filter( (d:ClothingObject) => d.clothing_type !== 'shoes')
-      this.setState({ data })
-    }
-    if((prevState.isPantsSelected !== isPantsSelected) && isPantsSelected){
-      fetch('http://localhost:4000/clothings/type/pants',{
-        method: 'GET'
-      }).then(response => response.json())
-      .then(data => this.setState({ data: data.data }))
-    }
-    if((prevState.isPantsSelected !== isPantsSelected) && !isPantsSelected){
-      const data = (this.state.data).filter( (d:ClothingObject) => d.clothing_type !== 'pants')
-      this.setState({ data })
-    }
+    if((prevState.isShoesSelected !== isShoesSelected) && isShoesSelected){ this.fetchType('shoes') }
+    if((prevState.isPantsSelected !== isPantsSelected) && isPantsSelected){ this.fetchType('pants') }
+    if((prevState.isShoesSelected !== isShoesSelected) && !isShoesSelected){ this.filterData('shoes') }
+    if((prevState.isPantsSelected !== isPantsSelected) && !isPantsSelected){ this.filterData('pants') }
+  }
+
+  public filterData = (type: string) => {
+    this.setState((prevState: State) => {
+      data: (prevState.data).filter(
+        (d:clothing) => d.clothing_type !== type
+      )
+    })
+  }
+
+  public concatData = (d: {data: Array<clothing>}) => {
+    this.setState( (prevState: State) => ({ data: prevState.data.concat(d.data) }))
+  }
+
+  public fetchType = (type: string) => {
+    fetch(`http://localhost:4000/clothings/type/${type}`, {
+      method: 'GET'
+    })
+    .then(response => response.json())
+    .then(d => this.concatData(d))
   }
 
   public handleCloseAddNewClothesPage = () => this.setState({ isAddNewClothesPageOpen: false })
@@ -101,7 +106,7 @@ export default class Main extends React.Component<Props, State> {
 
   public handleFilterSelected = (filter: string) => {
     const stateString = `is${filter[0] + filter.substr(1).toLocaleLowerCase()}Selected`
-    this.setState(prevState =>  ({[stateString]: !prevState[stateString] }));
+    this.setState((prevState:State) =>  ({[stateString]: !prevState[stateString] } as any)); // workaround https://stackoverflow.com/questions/46305939/dynamic-object-key-with-typescript-in-react-event-handler
   }
 
   public handleClearSelected = () => this.setState({
@@ -181,7 +186,7 @@ export default class Main extends React.Component<Props, State> {
             <div className="row main-content">
               <div className="card-container">
                 {/* <div className="clothe-card">CLOTHINGS</div> */}
-                {(this.state.data).map( clothing => {
+                {(this.state.data).map( (clothing:clothing) => {
                   const {
                     id,
                     image,
