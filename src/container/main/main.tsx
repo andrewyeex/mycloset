@@ -49,6 +49,19 @@ interface State {
 
 }
 
+const stateArr = [
+  {isShoesSelected    : 'shoes'   },
+  {isPantsSelected    : 'pants'   },
+  {isShirtsSelected   : 'shirts'  },
+  {isPolosSelected    : 'polos'   },
+  {isTshirtsSelected  : 'tshirts' },
+  {isJacketsSelected  : 'jacket'  },
+  {isSweatersSelected : 'sweaters'},
+  {isHoodiesSelected  : 'hoodies' },
+  {isShortsSelected   : 'shorts'  },
+  {isHeadwearSelected : 'headwear'}
+]
+
 export default class Main extends React.Component<Props, State> {
   constructor(props: Props){
     super(props)
@@ -71,14 +84,17 @@ export default class Main extends React.Component<Props, State> {
   }
 
   public componentDidUpdate = (prevProps: Props, prevState: State) => {
-    const {
-      isShoesSelected,
-      isPantsSelected
-    } = this.state
-    if((prevState.isShoesSelected !== isShoesSelected) && isShoesSelected){ this.fetchType('shoes') }
-    if((prevState.isPantsSelected !== isPantsSelected) && isPantsSelected){ this.fetchType('pants') }
-    if((prevState.isShoesSelected !== isShoesSelected) && !isShoesSelected){ this.filterData('shoes') }
-    if((prevState.isPantsSelected !== isPantsSelected) && !isPantsSelected){ this.filterData('pants') }
+    stateArr.forEach(obj => {
+      const key = Object.keys(obj).pop()
+      const val = !!key && obj[key]
+      if(
+        !!key &&
+        !!val &&
+        (prevState[key] !== this.state[key])
+      ){
+        !!this.state[key] ? this.fetchType(val) : this.filterData(val)
+      }
+    })
   }
 
   public filterData = (type: string) => {
