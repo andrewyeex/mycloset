@@ -1,3 +1,4 @@
+import axios from 'axios';
 import * as React from 'react';
 import AddClothing from '../../component/addClothing/addClothing';
 import DefaultPage from '../../component/defaultPage/defaultPage';
@@ -130,17 +131,17 @@ export default class Main extends React.Component<Props, State> {
   }
 
   public getClothing = (clothingType: string) => {
-    fetch(`http://localhost:4000/clothings/type/${clothingType}`, {
-      method: 'GET'
-    })
-    .then(response => response.json())
-    .then(d => this.concatData(d))
+    axios
+      .get(`http://localhost:4000/clothings/type/${clothingType}`)
+      .then( res => this.concatData(res.data) )
   }
 
   public handleCloseAddClothingPage   = () => this.setState({ isAddClothingPageOpen: false })
   public handleOpenAddClothingPage    = () => this.setState({ isAddClothingPageOpen: true  })
   public handleCloseEditClothingPage  = () => this.setState({ isEditClothingPageOpen: false})
-  public handleOpenEditClothingPage   = () => !!Object.keys(this.state.selectedClothing) && this.setState({ isEditClothingPageOpen: true }) // edit page will only open if not an empty object
+  public handleOpenEditClothingPage   = () => this.state.selectedClothing.id > 0 ?
+                                                this.setState({ isEditClothingPageOpen: true }) : // edit page will only open if not an empty object
+                                                alert('Need to Select a Clothing')
   public handleClothingSelected       = (clothing: Clothing) => this.setState({ selectedClothing: clothing }, this.handleOpenEditClothingPage)
 
   public handleClothingTypeSelected = (clothingType: string) => {
@@ -183,7 +184,7 @@ export default class Main extends React.Component<Props, State> {
       isHeadwearSelected
     } = this.state
 
-    const showDefaultPage = !(isHamburgerOpen || isUserSettingPageOpen || isAddClothingPageOpen)
+    const showDefaultPage = !(isHamburgerOpen || isUserSettingPageOpen || isAddClothingPageOpen || isEditClothingPageOpen)
 
     const menuProps = {
       clothingTypes               : CLOTHING_TYPES,

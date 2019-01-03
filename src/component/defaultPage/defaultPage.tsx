@@ -27,6 +27,7 @@ interface Props {
 
 class DefaultPage extends React.PureComponent< Props , {}  > {
   public renderCards = (clothingsArr: Clothing[]) => {
+    console.log({ clothingsArr })
     return clothingsArr.map(
       (clothing: Clothing) => {
         const {
@@ -65,7 +66,7 @@ class DefaultPage extends React.PureComponent< Props , {}  > {
         </div>
         <div className="row main-content">
           <div className="card-container">
-            {this.renderCards(clothingsArr)}
+            {!!clothingsArr.length && this.renderCards(clothingsArr)}
             <div
               className="clothe-card add"
               onClick={handleOpenAddClothingPage}>
