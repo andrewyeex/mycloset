@@ -140,7 +140,8 @@ export default class Main extends React.Component<Props, State> {
   public handleCloseAddClothingPage   = () => this.setState({ isAddClothingPageOpen: false })
   public handleOpenAddClothingPage    = () => this.setState({ isAddClothingPageOpen: true  })
   public handleCloseEditClothingPage  = () => this.setState({ isEditClothingPageOpen: false})
-  public handleOpenEditClothingPage   = () => this.setState({ isEditClothingPageOpen: true })
+  public handleOpenEditClothingPage   = () => !!Object.keys(this.state.selectedClothing) && this.setState({ isEditClothingPageOpen: true }) // edit page will only open if not an empty object
+  public handleClothingSelected       = (clothing: Clothing) => this.setState({ selectedClothing: clothing }, this.handleOpenEditClothingPage)
 
   public handleClothingTypeSelected = (clothingType: string) => {
     const stateString = `is${clothingType[0] + clothingType.substr(1).toLocaleLowerCase()}Selected`
@@ -213,6 +214,7 @@ export default class Main extends React.Component<Props, State> {
     const defaultPageProps = {
       menuProps,
       clothingsArr              : data,
+      handleClothingSelected    : this.handleClothingSelected,
       handleOpenAddClothingPage : this.handleOpenAddClothingPage
     }
 
@@ -223,9 +225,9 @@ export default class Main extends React.Component<Props, State> {
           <div className="col-8 title"><Title /></div>
           <div className="col-2 user-icon">{isUserSettingPageOpen ? <UserSettingPage /> : <UserSettingIcon />}</div>
         </div>
-        { isAddClothingPageOpen && <AddClothing {...addClothingProps} /> }
-        { isEditClothingPageOpen && !!Object.keys(selectedClothing) && <EditClothing {...editClothingProps} /> }
-        { showDefaultPage && <DefaultPage {...defaultPageProps} /> }
+        { isAddClothingPageOpen   && <AddClothing   {...addClothingProps  } /> }
+        { isEditClothingPageOpen  && <EditClothing  {...editClothingProps } /> }
+        { showDefaultPage         && <DefaultPage   {...defaultPageProps  } /> }
       </div>
     )
   }

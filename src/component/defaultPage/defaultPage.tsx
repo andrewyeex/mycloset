@@ -19,25 +19,26 @@ interface MenuProps {
 }
 
 interface Props {
-  menuProps                 : MenuProps;
-  clothingsArr                 : Clothing[];
-  handleOpenAddClothingPage : () => void;
+  menuProps                   : MenuProps;
+  clothingsArr                : Clothing[];
+  handleClothingSelected      : (clothing: Clothing) => void;
+  handleOpenAddClothingPage   : () => void;
 }
 
 class DefaultPage extends React.PureComponent< Props , {}  > {
   public renderCards = (clothingsArr: Clothing[]) => {
     return clothingsArr.map(
-      (clothings: Clothing) => {
+      (clothing: Clothing) => {
         const {
           id,
           image,
           clothing_type
-        } = clothings
+        } = clothing
         return (
           <div
             key={id}
             className="clothe-card"
-            onClick={this.props.handleOpenAddClothingPage}
+            onClick={() => this.props.handleClothingSelected(clothing) }
           >
             <img src={`${process.env.PUBLIC_URL}/${clothing_type}/${image}`} alt="Add New Clothes" />
           </div>
