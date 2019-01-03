@@ -1,5 +1,5 @@
 import * as React from 'react';
-import AddNewClothes from '../../component/addNewClothes/addNewClothes';
+import AddClothing from '../../component/AddClothing/AddClothing';
 import DefaultPage from '../../component/defaultPage/defaultPage';
 import HamburgerIcon from '../../component/hamburgerIcon/hamburgerIcon';
 import HamburgerPage from '../../component/hamburgerPage/hamburgerPage';
@@ -48,7 +48,7 @@ interface State {
   data                  : Clothing[];
   isHamburgerOpen       : boolean;
   isUserSettingPageOpen : boolean;
-  isAddNewClothesPageOpen: boolean;
+  isAddClothingPageOpen : boolean;
   isShoesSelected       : boolean;
   isPantsSelected       : boolean;
   isShirtsSelected      : boolean;
@@ -59,7 +59,7 @@ interface State {
   isHoodiesSelected     : boolean;
   isShortsSelected      : boolean;
   isHeadwearSelected    : boolean;
-
+  isEditClothingPageOpen: boolean;
 }
 
 export default class Main extends React.Component<Props, State> {
@@ -68,7 +68,8 @@ export default class Main extends React.Component<Props, State> {
     this.state = {
       isHamburgerOpen       : false,
       isUserSettingPageOpen : false,
-      isAddNewClothesPageOpen: true,
+      isEditClothingPageOpen: false,
+      isAddClothingPageOpen : false,
       isShoesSelected       : false,
       isPantsSelected       : false,
       isShirtsSelected      : false,
@@ -119,8 +120,8 @@ export default class Main extends React.Component<Props, State> {
     .then(d => this.concatData(d))
   }
 
-  public handleCloseAddNewClothesPage = () => this.setState({ isAddNewClothesPageOpen: false })
-  public handleOpenAddNewClothesPage  = () => this.setState({ isAddNewClothesPageOpen: true  })
+  public handleCloseAddClothingPage = () => this.setState({ isAddClothingPageOpen: false })
+  public handleOpenAddClothingPage  = () => this.setState({ isAddClothingPageOpen: true  })
 
   public handleFilterSelected = (filter: string) => {
     const stateString = `is${filter[0] + filter.substr(1).toLocaleLowerCase()}Selected`
@@ -147,7 +148,8 @@ export default class Main extends React.Component<Props, State> {
       data,
       isHamburgerOpen,
       isUserSettingPageOpen,
-      isAddNewClothesPageOpen,
+      isEditClothingPageOpen,
+      isAddClothingPageOpen,
       isShoesSelected,
       isPantsSelected,
       isShirtsSelected,
@@ -160,7 +162,7 @@ export default class Main extends React.Component<Props, State> {
       isHeadwearSelected
     } = this.state
 
-    const showDefaultPage = !(isHamburgerOpen || isUserSettingPageOpen || isAddNewClothesPageOpen)
+    const showDefaultPage = !(isHamburgerOpen || isUserSettingPageOpen || isAddClothingPageOpen)
 
     const menuProps = {
       filters               : CLOTHES_FILTERS,
@@ -178,15 +180,15 @@ export default class Main extends React.Component<Props, State> {
       isHeadwearSelected
     }
 
-    const addNewClothesProps = {
+    const addClothingProps = {
       filters                       : CLOTHES_FILTERS,
-      handleCloseAddNewClothesPage  : this.handleCloseAddNewClothesPage
+      handleCloseAddClothingPage  : this.handleCloseAddClothingPage
     }
 
     const defaultPageProps = {
       menuProps,
       clothes                     : data,
-      handleOpenAddNewClothesPage : this.handleOpenAddNewClothesPage
+      handleOpenAddClothingPage : this.handleOpenAddClothingPage
     }
 
     return(
@@ -196,7 +198,8 @@ export default class Main extends React.Component<Props, State> {
           <div className="col-8 title"><Title /></div>
           <div className="col-2 user-icon">{isUserSettingPageOpen ? <UserSettingPage /> : <UserSettingIcon />}</div>
         </div>
-        { isAddNewClothesPageOpen && <AddNewClothes {...addNewClothesProps} /> }
+        { isAddClothingPageOpen && <AddClothing {...addClothingProps} /> }
+        { isEditClothingPageOpen && <EditClothing /> }
         { showDefaultPage && <DefaultPage {...defaultPageProps} /> }
       </div>
     )

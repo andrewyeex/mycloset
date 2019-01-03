@@ -26,7 +26,7 @@ interface Clothing {
 interface Props {
   menuProps                   : MenuProps;
   clothes                     : Clothing[];
-  handleOpenAddNewClothesPage : () => void;
+  handleOpenAddClothingPage : () => void;
 }
 
 class DefaultPage extends React.PureComponent< Props , {}  > {
@@ -42,7 +42,7 @@ class DefaultPage extends React.PureComponent< Props , {}  > {
           <div
             key={id}
             className="clothe-card"
-            onClick={this.props.handleOpenAddNewClothesPage}
+            onClick={this.props.handleOpenAddClothingPage}
           >
             <img src={`${process.env.PUBLIC_URL}/${clothing_type}/${image}`} alt="Add New Clothes" />
           </div>
@@ -57,7 +57,7 @@ class DefaultPage extends React.PureComponent< Props , {}  > {
     const {
       menuProps,
       clothes,
-      handleOpenAddNewClothesPage
+      handleOpenAddClothingPage
     } = this.props
 
     return(
@@ -72,7 +72,7 @@ class DefaultPage extends React.PureComponent< Props , {}  > {
             {this.renderCards(clothes)}
             <div
               className="clothe-card add"
-              onClick={handleOpenAddNewClothesPage}>
+              onClick={handleOpenAddClothingPage}>
               <img src={addIcon} alt="Add New Clothes" />
             </div>
           </div>

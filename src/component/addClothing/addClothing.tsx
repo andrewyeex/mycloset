@@ -1,11 +1,11 @@
 import * as React from 'react';
-import './addNewClothes.css'
+import './addClothing.css'
 
-interface AddNewClothesProps {
+interface AddClothingProps {
   filters                     : string[];
-  handleCloseAddNewClothesPage: () => void;
+  handleCloseAddClothingPage: () => void;
 }
-interface AddNewClothesState {
+interface AddClothingState {
   name: string;
   image:string;
   note:string;
@@ -13,8 +13,8 @@ interface AddNewClothesState {
   type: string;
 }
 
-class AddNewClothes extends React.PureComponent< AddNewClothesProps, AddNewClothesState > {
-  constructor(props: AddNewClothesProps){
+class AddClothing extends React.PureComponent< AddClothingProps, AddClothingState > {
+  constructor(props: AddClothingProps){
     super(props)
     this.state = {
       name: '',
@@ -66,7 +66,7 @@ class AddNewClothes extends React.PureComponent< AddNewClothesProps, AddNewCloth
       <div id="new-clothes-form">
         <div className="row">
           <div className="col-1 offset-11 align-right">
-            <img src={xIcon} id="x-icon" onClick={this.props.handleCloseAddNewClothesPage}/>
+            <img src={xIcon} id="x-icon" onClick={this.props.handleCloseAddClothingPage}/>
           </div>
         </div>
         <form>
@@ -149,4 +149,4 @@ class AddNewClothes extends React.PureComponent< AddNewClothesProps, AddNewCloth
   }
 }
 
-export default AddNewClothes;
+export default AddClothing;
