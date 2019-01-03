@@ -1,9 +1,10 @@
 import * as React from 'react';
+import { Clothing } from '../../container/main/main'
 import Menu from '../menu/menu';
 
 interface MenuProps {
-  clothingTypes               : string[];
   handleClothingTypeSelected  : (x: string) => void;
+  clothingTypes         : string[];
   handleClearSelected   : () => void;
   isShoesSelected       : boolean;
   isPantsSelected       : boolean;
@@ -17,27 +18,21 @@ interface MenuProps {
   isHeadwearSelected    : boolean;
 }
 
-interface Clothing {
-  id            : number;
-  image         : string;
-  clothing_type : string;
-}
-
 interface Props {
-  menuProps                   : MenuProps;
-  clothes                     : Clothing[];
+  menuProps                 : MenuProps;
+  clothingsArr                 : Clothing[];
   handleOpenAddClothingPage : () => void;
 }
 
 class DefaultPage extends React.PureComponent< Props , {}  > {
-  public renderCards = (clothes: Clothing[]) => {
-    return clothes.map(
-      (clothing: Clothing) => {
+  public renderCards = (clothingsArr: Clothing[]) => {
+    return clothingsArr.map(
+      (clothings: Clothing) => {
         const {
           id,
           image,
           clothing_type
-        } = clothing
+        } = clothings
         return (
           <div
             key={id}
@@ -56,7 +51,7 @@ class DefaultPage extends React.PureComponent< Props , {}  > {
 
     const {
       menuProps,
-      clothes,
+      clothingsArr,
       handleOpenAddClothingPage
     } = this.props
 
@@ -69,7 +64,7 @@ class DefaultPage extends React.PureComponent< Props , {}  > {
         </div>
         <div className="row main-content">
           <div className="card-container">
-            {this.renderCards(clothes)}
+            {this.renderCards(clothingsArr)}
             <div
               className="clothe-card add"
               onClick={handleOpenAddClothingPage}>

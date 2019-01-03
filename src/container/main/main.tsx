@@ -9,7 +9,7 @@ import UserSettingIcon from '../../component/userSettingIcon/userSettingIcon';
 import UserSettingPage from '../../component/userSettingPage/userSettingPage';
 import './main.css';
 
-const CLOTHING_TYPES = [
+export const CLOTHING_TYPES = [
   "SHOES",
   "PANTS",
   "SHIRTS",
@@ -39,14 +39,20 @@ interface Props {
   name?: string;
 }
 
-interface Clothing {
-  id        : number;
-  image     : string;
-  clothing_type: string;
+export interface Clothing {
+  id          : number;
+  name        : string;
+  brand       : string;
+  color       : string;
+  image       : string;
+  note        : string;
+  date_bought : string;
+  clothing_type : string;
 }
 
 interface State {
   data                  : Clothing[];
+  selectedClothing      : Clothing;
   isHamburgerOpen       : boolean;
   isUserSettingPageOpen : boolean;
   isAddClothingPageOpen : boolean;
@@ -67,6 +73,16 @@ export default class Main extends React.Component<Props, State> {
   constructor(props: Props){
     super(props)
     this.state = {
+      selectedClothing      : {
+        id          : 0,
+        name        : '',
+        brand       : '',
+        color       : '',
+        image       : '',
+        note        : '',
+        date_bought : '',
+        clothing_type : ''
+      },
       isHamburgerOpen       : false,
       isUserSettingPageOpen : false,
       isEditClothingPageOpen: false,
@@ -149,6 +165,7 @@ export default class Main extends React.Component<Props, State> {
 
     const {
       data,
+      selectedClothing,
       isHamburgerOpen,
       isUserSettingPageOpen,
       isEditClothingPageOpen,
@@ -184,17 +201,18 @@ export default class Main extends React.Component<Props, State> {
     }
 
     const addClothingProps = {
-      clothingTypes                     : CLOTHING_TYPES,
+      clothingTypes               : CLOTHING_TYPES,
       handleCloseAddClothingPage  : this.handleCloseAddClothingPage
     }
 
     const editClothingProps = {
+      currentClothingValues       : selectedClothing,
       handleCloseEditClothingPage : this.handleCloseEditClothingPage
     }
 
     const defaultPageProps = {
       menuProps,
-      clothes                   : data,
+      clothingsArr              : data,
       handleOpenAddClothingPage : this.handleOpenAddClothingPage
     }
 
@@ -206,7 +224,7 @@ export default class Main extends React.Component<Props, State> {
           <div className="col-2 user-icon">{isUserSettingPageOpen ? <UserSettingPage /> : <UserSettingIcon />}</div>
         </div>
         { isAddClothingPageOpen && <AddClothing {...addClothingProps} /> }
-        { isEditClothingPageOpen && <EditClothing {...editClothingProps} /> }
+        { isEditClothingPageOpen && !!Object.keys(selectedClothing) && <EditClothing {...editClothingProps} /> }
         { showDefaultPage && <DefaultPage {...defaultPageProps} /> }
       </div>
     )

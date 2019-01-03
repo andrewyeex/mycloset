@@ -7,10 +7,12 @@ interface AddClothingProps {
 }
 interface AddClothingState {
   name        : string;
+  brand       : string;
+  color       : string;
   image       : string;
   note        : string;
   date_bought : string;
-  type        : string;
+  clothing_type : string;
 }
 
 class AddClothing extends React.PureComponent< AddClothingProps, AddClothingState > {
@@ -18,30 +20,36 @@ class AddClothing extends React.PureComponent< AddClothingProps, AddClothingStat
     super(props)
     this.state = {
       name        : '',
+      brand       : '',
+      color       : '',
       image       : '',
       note        : '',
       date_bought : '',
-      type        : ''
+      clothing_type        : ''
     }
   }
 
   public handleOnSubmit = () => {
     const {
       name,
+      brand,
+      color,
       image,
       note,
       date_bought,
-      type
+      clothing_type
     } = this.state
     fetch('http://localhost:4000/clothings',{
       method: 'POST',
       mode: 'no-cors',
       body: JSON.stringify({
         name,
+        brand,
+        color,
         image,
         note,
         date_bought,
-        type
+        clothing_type
       }),
       headers:{
         'Content-Type': 'application/json',
@@ -59,10 +67,12 @@ class AddClothing extends React.PureComponent< AddClothingProps, AddClothingStat
 
     const {
       name,
+      brand,
+      color,
       image,
       note,
       date_bought,
-      type
+      clothing_type
     } = this.state
 
     return(
@@ -82,7 +92,7 @@ class AddClothing extends React.PureComponent< AddClothingProps, AddClothingStat
 
           <div className="form-group row">
             <div className="offset-2 col-8">
-              <select id="clothe-category" defaultValue={type} onChange={(e) => this.setState({ type: e.currentTarget.value })}>
+              <select id="clothe-category" defaultValue={clothing_type} onChange={(e) => this.setState({ clothing_type: e.currentTarget.value })}>
                 <option value="" disabled={true}>CATEGORY...</option>
                 { clothingTypes.map( (f: string) => <option key={f} value={f.toLowerCase()}>{f}</option>)}
               </select>
@@ -97,6 +107,32 @@ class AddClothing extends React.PureComponent< AddClothingProps, AddClothingStat
                 placeholder="NAME"
                 id="clothe-name"
                 value={name}
+                onChange={(e) => this.setState({ name: e.currentTarget.value })}
+              />
+            </div>
+          </div>
+
+          <div className="form-group row">
+            <div className="offset-2 col-8">
+              <input
+                type="text"
+                className="form-control-plaintext clothes-text-input"
+                placeholder="BRAND"
+                id="clothe-brand"
+                value={brand}
+                onChange={(e) => this.setState({ name: e.currentTarget.value })}
+              />
+            </div>
+          </div>
+
+          <div className="form-group row">
+            <div className="offset-2 col-8">
+              <input
+                type="text"
+                className="form-control-plaintext clothes-text-input"
+                placeholder="COLOR"
+                id="clothe-color"
+                value={color}
                 onChange={(e) => this.setState({ name: e.currentTarget.value })}
               />
             </div>
