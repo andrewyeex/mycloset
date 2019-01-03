@@ -181,6 +181,12 @@ export default class Main extends React.Component<Props, State> {
       handleCloseAddNewClothesPage  : this.handleCloseAddNewClothesPage
     }
 
+    const defaultPageProps = {
+      menuProps,
+      clothes                     : data,
+      handleOpenAddNewClothesPage : this.handleOpenAddNewClothesPage
+    }
+
     return(
       <div id="main" className="container-fluid">
         <div className="row top-bar">
@@ -189,7 +195,7 @@ export default class Main extends React.Component<Props, State> {
           <div className="col-2 user-icon">{isUserSettingPageOpen ? <UserSettingPage /> : <UserSettingIcon />}</div>
         </div>
         { isAddNewClothesPageOpen && <AddNewClothes {...addNewClothesProps} /> }
-        { showDefaultPage && <DefaultPage menuProps={menuProps} clothes={data} handleOpenAddNewClothesPage={this.handleOpenAddNewClothesPage}/> }
+        { showDefaultPage && <DefaultPage {...defaultPageProps} /> }
       </div>
     )
   }
