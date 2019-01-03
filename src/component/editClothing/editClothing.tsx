@@ -12,6 +12,9 @@ interface Props {
 }
 
 class EditClothing extends React.PureComponent< Props, Clothing > {
+
+  private xIcon = require('../../utilities/open-iconic-master/svg/x.svg')
+
   constructor(props: Props){
     super(props)
     const {
@@ -35,8 +38,6 @@ class EditClothing extends React.PureComponent< Props, Clothing > {
       clothing_type
     }
   }
-
-  private xIcon = require('../../utilities/open-iconic-master/svg/x.svg')
 
   public handleOnUpdate = () => {
     const {

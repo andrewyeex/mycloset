@@ -17,6 +17,9 @@ interface AddClothingState {
 }
 
 class AddClothing extends React.PureComponent< AddClothingProps, AddClothingState > {
+
+  private xIcon = require('../../utilities/open-iconic-master/svg/x.svg')
+
   constructor(props: AddClothingProps){
     super(props)
     this.state = {
@@ -29,8 +32,6 @@ class AddClothing extends React.PureComponent< AddClothingProps, AddClothingStat
       clothing_type        : ''
     }
   }
-
-  private xIcon = require('../../utilities/open-iconic-master/svg/x.svg')
 
   public handleOnSubmit = () => {
     const {
