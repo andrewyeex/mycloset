@@ -1,6 +1,7 @@
 import * as React from 'react';
-import AddClothing from '../../component/AddClothing/AddClothing';
+import AddClothing from '../../component/addClothing/addClothing';
 import DefaultPage from '../../component/defaultPage/defaultPage';
+import EditClothing from '../../component/editClothing/editClothing';
 import HamburgerIcon from '../../component/hamburgerIcon/hamburgerIcon';
 import HamburgerPage from '../../component/hamburgerPage/hamburgerPage';
 import Title from '../../component/title/title';

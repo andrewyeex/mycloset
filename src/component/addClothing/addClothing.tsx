@@ -1,27 +1,27 @@
 import * as React from 'react';
-import './addClothing.css'
+import './addClothing.css';
 
 interface AddClothingProps {
   filters                     : string[];
-  handleCloseAddClothingPage: () => void;
+  handleCloseAddClothingPage  : () => void;
 }
 interface AddClothingState {
-  name: string;
-  image:string;
-  note:string;
-  date_bought: string;
-  type: string;
+  name        : string;
+  image       : string;
+  note        : string;
+  date_bought : string;
+  type        : string;
 }
 
 class AddClothing extends React.PureComponent< AddClothingProps, AddClothingState > {
   constructor(props: AddClothingProps){
     super(props)
     this.state = {
-      name: '',
-      image: '',
-      note: '',
-      date_bought: '',
-      type: ''
+      name        : '',
+      image       : '',
+      note        : '',
+      date_bought : '',
+      type        : ''
     }
   }
 
