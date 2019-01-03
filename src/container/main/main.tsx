@@ -106,7 +106,9 @@ export default class Main extends React.Component<Props, State> {
   }
 
   public concatData = (d: {data: Clothing[]}) => {
-    this.setState( (prevState: State) => ({ data: prevState.data.concat(d.data) }))
+    this.setState(
+      (prevState: State) => ({ data: prevState.data.concat(d.data) })
+    )
   }
 
   public fetchType = (type: string) => {

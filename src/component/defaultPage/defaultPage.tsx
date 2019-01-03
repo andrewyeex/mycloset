@@ -2,34 +2,55 @@ import * as React from 'react';
 import Menu from '../menu/menu';
 
 interface MenuProps {
-  filters : string[];
-  handleFilterSelected : (x: string) => void;
-  handleClearSelected: () => void;
-  isShoesSelected: boolean;
-  isPantsSelected: boolean;
-  isShirtsSelected: boolean;
-  isPolosSelected: boolean;
-  isTshirtsSelected: boolean;
-  isJacketsSelected: boolean;
-  isSweatersSelected: boolean;
-  isHoodiesSelected: boolean;
-  isShortsSelected: boolean;
-  isHeadwearSelected: boolean;
+  filters               : string[];
+  handleFilterSelected  : (x: string) => void;
+  handleClearSelected   : () => void;
+  isShoesSelected       : boolean;
+  isPantsSelected       : boolean;
+  isShirtsSelected      : boolean;
+  isPolosSelected       : boolean;
+  isTshirtsSelected     : boolean;
+  isJacketsSelected     : boolean;
+  isSweatersSelected    : boolean;
+  isHoodiesSelected     : boolean;
+  isShortsSelected      : boolean;
+  isHeadwearSelected    : boolean;
 }
 
 interface Clothing {
-  id        : number;
-  image     : string;
-  clothing_type: string;
+  id            : number;
+  image         : string;
+  clothing_type : string;
 }
 
 interface Props {
-  menuProps: MenuProps;
-  clothes: Clothing[];
-  handleOpenAddNewClothesPage: () => void;
+  menuProps                   : MenuProps;
+  clothes                     : Clothing[];
+  handleOpenAddNewClothesPage : () => void;
 }
 
 class DefaultPage extends React.PureComponent< Props , {}  > {
+  public renderCards = (clothes: Clothing[]) => {
+    return clothes.map(
+      (clothing: Clothing) => {
+        const {
+          id,
+          image,
+          clothing_type
+        } = clothing
+        return (
+          <div
+            key={id}
+            className="clothe-card"
+            onClick={this.props.handleOpenAddNewClothesPage}
+          >
+            <img src={`${process.env.PUBLIC_URL}/${clothing_type}/${image}`} alt="Add New Clothes" />
+          </div>
+        )
+      }
+    )
+  }
+
   public render () {
     const addIcon = require('../../utilities/open-iconic-master/svg/plus.svg');
 
@@ -41,7 +62,6 @@ class DefaultPage extends React.PureComponent< Props , {}  > {
 
     return(
       <React.Fragment>
-        {/* DIV WITH 3 COMPONENTS -> FAVORITE BUTTON, MENU, SORT_BY */}
         <div className="row menu">
           <div className="col-1  col-sm-2 ">_</div>
           <div className="col-10 col-sm-8 title"><Menu {...menuProps} /></div>
@@ -49,23 +69,7 @@ class DefaultPage extends React.PureComponent< Props , {}  > {
         </div>
         <div className="row main-content">
           <div className="card-container">
-            {/* <div className="clothe-card">CLOTHINGS</div> */}
-            {clothes.map( (clothing: Clothing) => {
-              const {
-                id,
-                image,
-                clothing_type
-              } = clothing
-              return (
-                <div
-                  key={id}
-                  className="clothe-card"
-                  onClick={handleOpenAddNewClothesPage}>
-                  <img src={`${process.env.PUBLIC_URL}/${clothing_type}/${image}`} alt="Add New Clothes" />
-                  <div className="clothe-card-overlay" />
-                </div>
-              )
-            })}
+            {this.renderCards(clothes)}
             <div
               className="clothe-card add"
               onClick={handleOpenAddNewClothesPage}>
