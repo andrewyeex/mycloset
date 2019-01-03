@@ -9,10 +9,9 @@ interface HamburgerIconState {
 }
 
 class HamburgerIcon extends React.PureComponent<HamburgerIconProps, HamburgerIconState> {
-
+  private icon = require('../../utilities/open-iconic-master/svg/menu.svg')
   public render() {
-    const icon = require('../../utilities/open-iconic-master/svg/menu.svg')
-    return <img id="hamburgerIcon" src={icon} alt="hamburger icon" />;
+    return <img id="hamburgerIcon" src={this.icon} alt="hamburger icon" />;
   }
 
 }

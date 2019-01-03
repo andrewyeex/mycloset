@@ -30,6 +30,8 @@ class AddClothing extends React.PureComponent< AddClothingProps, AddClothingStat
     }
   }
 
+  private xIcon = require('../../utilities/open-iconic-master/svg/x.svg')
+
   public handleOnSubmit = () => {
     const {
       name,
@@ -59,7 +61,6 @@ class AddClothing extends React.PureComponent< AddClothingProps, AddClothingStat
   }
 
   public render() {
-    const xIcon = require('../../utilities/open-iconic-master/svg/x.svg')
 
     const { clothingTypes } = this.props
 
@@ -77,7 +78,7 @@ class AddClothing extends React.PureComponent< AddClothingProps, AddClothingStat
       <div id="new-clothes-form">
         <div className="row">
           <div className="col-1 offset-11 align-right">
-            <img src={xIcon} id="x-icon" onClick={this.props.handleCloseAddClothingPage}/>
+            <img src={this.xIcon} id="x-icon" onClick={this.props.handleCloseAddClothingPage}/>
           </div>
         </div>
         <form>

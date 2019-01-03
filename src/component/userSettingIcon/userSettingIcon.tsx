@@ -9,10 +9,9 @@ interface UserSettingIconState {
 }
 
 class UserSettingIcon extends React.PureComponent<UserSettingIconProps, UserSettingIconState> {
-
+  private userImg = require('../../images/andrew.png');
   public render() {
-    const userImg = require('../../images/andrew.png');
-    return <img id="userImg" src={userImg} alt="image of user" />;
+    return <img id="userImg" src={this.userImg} alt="image of user" />;
   }
 
 }
