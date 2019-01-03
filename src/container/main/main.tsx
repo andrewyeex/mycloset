@@ -1,14 +1,15 @@
 import * as React from 'react';
-import AddNewClothes from '../../component/addNewClothes/addNewClothes'
+import AddClothing from '../../component/addClothing/addClothing';
+import DefaultPage from '../../component/defaultPage/defaultPage';
+import EditClothing from '../../component/editClothing/editClothing';
 import HamburgerIcon from '../../component/hamburgerIcon/hamburgerIcon';
 import HamburgerPage from '../../component/hamburgerPage/hamburgerPage';
-import Menu from '../../component/menu/menu';
 import Title from '../../component/title/title';
 import UserSettingIcon from '../../component/userSettingIcon/userSettingIcon';
 import UserSettingPage from '../../component/userSettingPage/userSettingPage';
 import './main.css';
 
-const CLOTHES_FILTERS = [
+export const CLOTHING_TYPES = [
   "SHOES",
   "PANTS",
   "SHIRTS",
@@ -21,16 +22,40 @@ const CLOTHES_FILTERS = [
   "HEADWEAR"
 ]
 
+const stateArr = [
+  {isShoesSelected    : 'shoes'   },
+  {isPantsSelected    : 'pants'   },
+  {isShirtsSelected   : 'shirts'  },
+  {isPolosSelected    : 'polos'   },
+  {isTshirtsSelected  : 'tshirts' },
+  {isJacketsSelected  : 'jacket'  },
+  {isSweatersSelected : 'sweaters'},
+  {isHoodiesSelected  : 'hoodies' },
+  {isShortsSelected   : 'shorts'  },
+  {isHeadwearSelected : 'headwear'}
+]
+
 interface Props {
   name?: string;
 }
 
+export interface Clothing {
+  id          : number;
+  name        : string;
+  brand       : string;
+  color       : string;
+  image       : string;
+  note        : string;
+  date_bought : string;
+  clothing_type : string;
+}
+
 interface State {
-  data                  : [] | never[];
-  [x: string]           : boolean | object; // this statement applies the rule that all state properties are booleans ?
+  data                  : Clothing[];
+  selectedClothing      : Clothing;
   isHamburgerOpen       : boolean;
   isUserSettingPageOpen : boolean;
-  isAddNewClothesPageOpen: boolean;
+  isAddClothingPageOpen : boolean;
   isShoesSelected       : boolean;
   isPantsSelected       : boolean;
   isShirtsSelected      : boolean;
@@ -41,20 +66,27 @@ interface State {
   isHoodiesSelected     : boolean;
   isShortsSelected      : boolean;
   isHeadwearSelected    : boolean;
-
-}
-
-interface ClothingObject {
-  clothing_type : string;
+  isEditClothingPageOpen: boolean;
 }
 
 export default class Main extends React.Component<Props, State> {
   constructor(props: Props){
     super(props)
     this.state = {
+      selectedClothing      : {
+        id          : 0,
+        name        : '',
+        brand       : '',
+        color       : '',
+        image       : '',
+        note        : '',
+        date_bought : '',
+        clothing_type : ''
+      },
       isHamburgerOpen       : false,
       isUserSettingPageOpen : false,
-      isAddNewClothesPageOpen: true,
+      isEditClothingPageOpen: false,
+      isAddClothingPageOpen : false,
       isShoesSelected       : false,
       isPantsSelected       : false,
       isShirtsSelected      : false,
@@ -70,38 +102,50 @@ export default class Main extends React.Component<Props, State> {
   }
 
   public componentDidUpdate = (prevProps: Props, prevState: State) => {
-    const {
-      isShoesSelected,
-      isPantsSelected
-    } = this.state
-    if((prevState.isShoesSelected !== isShoesSelected) && isShoesSelected){
-      fetch('http://localhost:4000/clothings/type/shoes',{
-        method: 'GET'
-      }).then(response => response.json())
-      .then(data => this.setState({ data: data.data }))
-    }
-    if((prevState.isShoesSelected !== isShoesSelected) && !isShoesSelected){
-      const data = (this.state.data).filter( (d:ClothingObject) => d.clothing_type !== 'shoes')
-      this.setState({ data })
-    }
-    if((prevState.isPantsSelected !== isPantsSelected) && isPantsSelected){
-      fetch('http://localhost:4000/clothings/type/pants',{
-        method: 'GET'
-      }).then(response => response.json())
-      .then(data => this.setState({ data: data.data }))
-    }
-    if((prevState.isPantsSelected !== isPantsSelected) && !isPantsSelected){
-      const data = (this.state.data).filter( (d:ClothingObject) => d.clothing_type !== 'pants')
-      this.setState({ data })
-    }
+    stateArr.forEach(obj => {
+      const key = Object.keys(obj).pop()
+      const val = !!key && obj[key]
+      if(
+        !!key &&
+        !!val &&
+        (prevState[key] !== this.state[key])
+      ){
+        !!this.state[key] ? this.getClothing(val) : this.clothingTypeData(val)
+      }
+    })
   }
 
-  public handleCloseAddNewClothesPage = () => this.setState({ isAddNewClothesPageOpen: false })
-  public handleOpenAddNewClothesPage  = () => this.setState({ isAddNewClothesPageOpen: true  })
+  public clothingTypeData = (type: string) => {
+    this.setState((prevState: State) => ({
+      data: (prevState.data).filter(
+        (d:Clothing) => d.clothing_type !== type
+      )
+    }))
+  }
 
-  public handleFilterSelected = (filter: string) => {
-    const stateString = `is${filter[0] + filter.substr(1).toLocaleLowerCase()}Selected`
-    this.setState(prevState =>  ({[stateString]: !prevState[stateString] }));
+  public concatData = (d: {data: Clothing[]}) => {
+    this.setState(
+      (prevState: State) => ({ data: prevState.data.concat(d.data) })
+    )
+  }
+
+  public getClothing = (clothingType: string) => {
+    fetch(`http://localhost:4000/clothings/type/${clothingType}`, {
+      method: 'GET'
+    })
+    .then(response => response.json())
+    .then(d => this.concatData(d))
+  }
+
+  public handleCloseAddClothingPage   = () => this.setState({ isAddClothingPageOpen: false })
+  public handleOpenAddClothingPage    = () => this.setState({ isAddClothingPageOpen: true  })
+  public handleCloseEditClothingPage  = () => this.setState({ isEditClothingPageOpen: false})
+  public handleOpenEditClothingPage   = () => !!Object.keys(this.state.selectedClothing) && this.setState({ isEditClothingPageOpen: true }) // edit page will only open if not an empty object
+  public handleClothingSelected       = (clothing: Clothing) => this.setState({ selectedClothing: clothing }, this.handleOpenEditClothingPage)
+
+  public handleClothingTypeSelected = (clothingType: string) => {
+    const stateString = `is${clothingType[0] + clothingType.substr(1).toLocaleLowerCase()}Selected`
+    this.setState((prevState:State) =>  ({[stateString]: !prevState[stateString] } as any)); // workaround https://stackoverflow.com/questions/46305939/dynamic-object-key-with-typescript-in-react-event-handler
   }
 
   public handleClearSelected = () => this.setState({
@@ -121,9 +165,12 @@ export default class Main extends React.Component<Props, State> {
   public render(){
 
     const {
+      data,
+      selectedClothing,
       isHamburgerOpen,
       isUserSettingPageOpen,
-      isAddNewClothesPageOpen,
+      isEditClothingPageOpen,
+      isAddClothingPageOpen,
       isShoesSelected,
       isPantsSelected,
       isShirtsSelected,
@@ -136,10 +183,12 @@ export default class Main extends React.Component<Props, State> {
       isHeadwearSelected
     } = this.state
 
+    const showDefaultPage = !(isHamburgerOpen || isUserSettingPageOpen || isAddClothingPageOpen)
+
     const menuProps = {
-      filters               : CLOTHES_FILTERS,
-      handleFilterSelected  : this.handleFilterSelected,
-      handleClearSelected   : this.handleClearSelected,
+      clothingTypes               : CLOTHING_TYPES,
+      handleClothingTypeSelected  : this.handleClothingTypeSelected,
+      handleClearSelected         : this.handleClearSelected,
       isShoesSelected,
       isPantsSelected,
       isShirtsSelected,
@@ -152,60 +201,33 @@ export default class Main extends React.Component<Props, State> {
       isHeadwearSelected
     }
 
-    const addNewClothesProps = {
-      filters                       : CLOTHES_FILTERS,
-      handleCloseAddNewClothesPage  : this.handleCloseAddNewClothesPage
+    const addClothingProps = {
+      clothingTypes               : CLOTHING_TYPES,
+      handleCloseAddClothingPage  : this.handleCloseAddClothingPage
     }
 
-    const showDefaultPage = !(isHamburgerOpen || isUserSettingPageOpen || isAddNewClothesPageOpen)
+    const editClothingProps = {
+      currentClothingValues       : selectedClothing,
+      handleCloseEditClothingPage : this.handleCloseEditClothingPage
+    }
 
-    const addIcon = require('../../utilities/open-iconic-master/svg/plus.svg')
+    const defaultPageProps = {
+      menuProps,
+      clothingsArr              : data,
+      handleClothingSelected    : this.handleClothingSelected,
+      handleOpenAddClothingPage : this.handleOpenAddClothingPage
+    }
+
     return(
       <div id="main" className="container-fluid">
-        {/* DIV WITH 3 COMPONENTS -> HAMBURGER, TITTLE, USER */}
         <div className="row top-bar">
           <div className="col-2">{isHamburgerOpen ? <HamburgerPage /> : <HamburgerIcon />}</div>
           <div className="col-8 title"><Title /></div>
           <div className="col-2 user-icon">{isUserSettingPageOpen ? <UserSettingPage /> : <UserSettingIcon />}</div>
         </div>
-        { isAddNewClothesPageOpen && <AddNewClothes {...addNewClothesProps} /> }
-        { showDefaultPage &&
-          <React.Fragment>
-            {/* DIV WITH 3 COMPONENTS -> FAVORITE BUTTON, MENU, SORT_BY */}
-            <div className="row menu">
-              <div className="col-1  col-sm-2 ">_</div>
-              <div className="col-10 col-sm-8 title"><Menu {...menuProps} /></div>
-              <div className="col-1  col-sm-2 text-right">_</div>
-            </div>
-            {/* CONTENT COMPONENT */}
-            <div className="row main-content">
-              <div className="card-container">
-                {/* <div className="clothe-card">CLOTHINGS</div> */}
-                {(this.state.data).map( clothing => {
-                  const {
-                    id,
-                    image,
-                    clothing_type
-                  } = clothing
-                  return (
-                    <div
-                      key={id}
-                      className="clothe-card"
-                      onClick={this.handleOpenAddNewClothesPage}>
-                      <img src={`${process.env.PUBLIC_URL}/${clothing_type}/${image}`} alt="Add New Clothes" />
-                      <div className="clothe-card-overlay" />
-                    </div>
-                  )
-                })}
-                <div
-                  className="clothe-card add"
-                  onClick={this.handleOpenAddNewClothesPage}>
-                  <img src={addIcon} alt="Add New Clothes" />
-                </div>
-              </div>
-            </div>
-          </React.Fragment>
-        }
+        { isAddClothingPageOpen   && <AddClothing   {...addClothingProps  } /> }
+        { isEditClothingPageOpen  && <EditClothing  {...editClothingProps } /> }
+        { showDefaultPage         && <DefaultPage   {...defaultPageProps  } /> }
       </div>
     )
   }

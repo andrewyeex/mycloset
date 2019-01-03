@@ -2,42 +2,43 @@ import * as React from 'react';
 import './menu.css'
 
 interface MenuProps {
-  filters               : string[];
-  handleFilterSelected  : (id: string) => void;
+  clothingTypes               : string[];
+  handleClothingTypeSelected  : (id: string) => void;
   handleClearSelected   : () => void;
 }
-
-interface MenuState {
-  name?: string;
-}
-
-class Menu extends React.PureComponent< MenuProps, MenuState > {
+class Menu extends React.PureComponent< MenuProps, {} > {
   public static defaultProps = {
     filters: ["SHOES"]
   }
 
   public render() {
-    const { filters } = this.props
+
+    const {
+      clothingTypes,
+      handleClearSelected,
+      handleClothingTypeSelected
+    } = this.props
+
     return(
       <div className="filter-pills-container">
         <div>
           {
-            filters.map( (filter, i) => {
-              const isSelected = this.props[`is${filter[0] + filter.substr(1).toLocaleLowerCase()}Selected`]
+            clothingTypes.map( (clothingType, i) => {
+              const isSelected = this.props[`is${clothingType[0] + clothingType.substr(1).toLocaleLowerCase()}Selected`]
               return(
                 <div
-                  id={filter}
-                  key={filter}
-                  onClick={() => this.props.handleFilterSelected(filter)}
+                  id={clothingType}
+                  key={clothingType}
+                  onClick={() => handleClothingTypeSelected(clothingType)}
                   className={`filter-pills ${isSelected ? 'active' : 'inactive'}`} >
-                  {filter}
+                  {clothingType}
                 </div>
               )
             })
           }
         </div>
         <div className="filter-helpers" >
-          <div id="CLEAR" onClick={this.props.handleClearSelected} >CLEAR</div>
+          <div id="CLEAR" onClick={handleClearSelected} >CLEAR</div>
         </div>
       </div>
     );
