@@ -6,18 +6,19 @@ interface MenuProps {
   handleFilterSelected  : (id: string) => void;
   handleClearSelected   : () => void;
 }
-
-interface MenuState {
-  name?: string;
-}
-
-class Menu extends React.PureComponent< MenuProps, MenuState > {
+class Menu extends React.PureComponent< MenuProps, {} > {
   public static defaultProps = {
     filters: ["SHOES"]
   }
 
   public render() {
-    const { filters } = this.props
+
+    const {
+      filters,
+      handleClearSelected,
+      handleFilterSelected
+    } = this.props
+
     return(
       <div className="filter-pills-container">
         <div>
@@ -28,7 +29,7 @@ class Menu extends React.PureComponent< MenuProps, MenuState > {
                 <div
                   id={filter}
                   key={filter}
-                  onClick={() => this.props.handleFilterSelected(filter)}
+                  onClick={() => handleFilterSelected(filter)}
                   className={`filter-pills ${isSelected ? 'active' : 'inactive'}`} >
                   {filter}
                 </div>
@@ -37,7 +38,7 @@ class Menu extends React.PureComponent< MenuProps, MenuState > {
           }
         </div>
         <div className="filter-helpers" >
-          <div id="CLEAR" onClick={this.props.handleClearSelected} >CLEAR</div>
+          <div id="CLEAR" onClick={handleClearSelected} >CLEAR</div>
         </div>
       </div>
     );

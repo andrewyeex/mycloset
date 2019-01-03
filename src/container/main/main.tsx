@@ -1,8 +1,8 @@
 import * as React from 'react';
-import AddNewClothes from '../../component/addNewClothes/addNewClothes'
+import AddNewClothes from '../../component/addNewClothes/addNewClothes';
+import DefaultPage from '../../component/defaultPage/defaultPage';
 import HamburgerIcon from '../../component/hamburgerIcon/hamburgerIcon';
 import HamburgerPage from '../../component/hamburgerPage/hamburgerPage';
-import Menu from '../../component/menu/menu';
 import Title from '../../component/title/title';
 import UserSettingIcon from '../../component/userSettingIcon/userSettingIcon';
 import UserSettingPage from '../../component/userSettingPage/userSettingPage';
@@ -21,18 +21,31 @@ const CLOTHES_FILTERS = [
   "HEADWEAR"
 ]
 
+const stateArr = [
+  {isShoesSelected    : 'shoes'   },
+  {isPantsSelected    : 'pants'   },
+  {isShirtsSelected   : 'shirts'  },
+  {isPolosSelected    : 'polos'   },
+  {isTshirtsSelected  : 'tshirts' },
+  {isJacketsSelected  : 'jacket'  },
+  {isSweatersSelected : 'sweaters'},
+  {isHoodiesSelected  : 'hoodies' },
+  {isShortsSelected   : 'shorts'  },
+  {isHeadwearSelected : 'headwear'}
+]
+
 interface Props {
   name?: string;
 }
 
-interface clothing {
+interface Clothing {
   id        : number;
   image     : string;
   clothing_type: string;
 }
 
 interface State {
-  data                  : Array<clothing>;
+  data                  : Clothing[];
   isHamburgerOpen       : boolean;
   isUserSettingPageOpen : boolean;
   isAddNewClothesPageOpen: boolean;
@@ -48,19 +61,6 @@ interface State {
   isHeadwearSelected    : boolean;
 
 }
-
-const stateArr = [
-  {isShoesSelected    : 'shoes'   },
-  {isPantsSelected    : 'pants'   },
-  {isShirtsSelected   : 'shirts'  },
-  {isPolosSelected    : 'polos'   },
-  {isTshirtsSelected  : 'tshirts' },
-  {isJacketsSelected  : 'jacket'  },
-  {isSweatersSelected : 'sweaters'},
-  {isHoodiesSelected  : 'hoodies' },
-  {isShortsSelected   : 'shorts'  },
-  {isHeadwearSelected : 'headwear'}
-]
 
 export default class Main extends React.Component<Props, State> {
   constructor(props: Props){
@@ -98,14 +98,14 @@ export default class Main extends React.Component<Props, State> {
   }
 
   public filterData = (type: string) => {
-    this.setState((prevState: State) => {
+    this.setState((prevState: State) => ({
       data: (prevState.data).filter(
-        (d:clothing) => d.clothing_type !== type
+        (d:Clothing) => d.clothing_type !== type
       )
-    })
+    }))
   }
 
-  public concatData = (d: {data: Array<clothing>}) => {
+  public concatData = (d: {data: Clothing[]}) => {
     this.setState( (prevState: State) => ({ data: prevState.data.concat(d.data) }))
   }
 
@@ -142,6 +142,7 @@ export default class Main extends React.Component<Props, State> {
   public render(){
 
     const {
+      data,
       isHamburgerOpen,
       isUserSettingPageOpen,
       isAddNewClothesPageOpen,
@@ -156,6 +157,8 @@ export default class Main extends React.Component<Props, State> {
       isShortsSelected,
       isHeadwearSelected
     } = this.state
+
+    const showDefaultPage = !(isHamburgerOpen || isUserSettingPageOpen || isAddNewClothesPageOpen)
 
     const menuProps = {
       filters               : CLOTHES_FILTERS,
@@ -178,55 +181,15 @@ export default class Main extends React.Component<Props, State> {
       handleCloseAddNewClothesPage  : this.handleCloseAddNewClothesPage
     }
 
-    const showDefaultPage = !(isHamburgerOpen || isUserSettingPageOpen || isAddNewClothesPageOpen)
-
-    const addIcon = require('../../utilities/open-iconic-master/svg/plus.svg')
     return(
       <div id="main" className="container-fluid">
-        {/* DIV WITH 3 COMPONENTS -> HAMBURGER, TITTLE, USER */}
         <div className="row top-bar">
           <div className="col-2">{isHamburgerOpen ? <HamburgerPage /> : <HamburgerIcon />}</div>
           <div className="col-8 title"><Title /></div>
           <div className="col-2 user-icon">{isUserSettingPageOpen ? <UserSettingPage /> : <UserSettingIcon />}</div>
         </div>
         { isAddNewClothesPageOpen && <AddNewClothes {...addNewClothesProps} /> }
-        { showDefaultPage &&
-          <React.Fragment>
-            {/* DIV WITH 3 COMPONENTS -> FAVORITE BUTTON, MENU, SORT_BY */}
-            <div className="row menu">
-              <div className="col-1  col-sm-2 ">_</div>
-              <div className="col-10 col-sm-8 title"><Menu {...menuProps} /></div>
-              <div className="col-1  col-sm-2 text-right">_</div>
-            </div>
-            {/* CONTENT COMPONENT */}
-            <div className="row main-content">
-              <div className="card-container">
-                {/* <div className="clothe-card">CLOTHINGS</div> */}
-                {(this.state.data).map( (clothing:clothing) => {
-                  const {
-                    id,
-                    image,
-                    clothing_type
-                  } = clothing
-                  return (
-                    <div
-                      key={id}
-                      className="clothe-card"
-                      onClick={this.handleOpenAddNewClothesPage}>
-                      <img src={`${process.env.PUBLIC_URL}/${clothing_type}/${image}`} alt="Add New Clothes" />
-                      <div className="clothe-card-overlay" />
-                    </div>
-                  )
-                })}
-                <div
-                  className="clothe-card add"
-                  onClick={this.handleOpenAddNewClothesPage}>
-                  <img src={addIcon} alt="Add New Clothes" />
-                </div>
-              </div>
-            </div>
-          </React.Fragment>
-        }
+        { showDefaultPage && <DefaultPage menuProps={menuProps} clothes={data} handleOpenAddNewClothesPage={this.handleOpenAddNewClothesPage}/> }
       </div>
     )
   }
