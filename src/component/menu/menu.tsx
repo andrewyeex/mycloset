@@ -2,8 +2,8 @@ import * as React from 'react';
 import './menu.css'
 
 interface MenuProps {
-  filters               : string[];
-  handleFilterSelected  : (id: string) => void;
+  clothingTypes               : string[];
+  handleClothingTypeSelected  : (id: string) => void;
   handleClearSelected   : () => void;
 }
 class Menu extends React.PureComponent< MenuProps, {} > {
@@ -14,24 +14,24 @@ class Menu extends React.PureComponent< MenuProps, {} > {
   public render() {
 
     const {
-      filters,
+      clothingTypes,
       handleClearSelected,
-      handleFilterSelected
+      handleClothingTypeSelected
     } = this.props
 
     return(
       <div className="filter-pills-container">
         <div>
           {
-            filters.map( (filter, i) => {
-              const isSelected = this.props[`is${filter[0] + filter.substr(1).toLocaleLowerCase()}Selected`]
+            clothingTypes.map( (clothingType, i) => {
+              const isSelected = this.props[`is${clothingType[0] + clothingType.substr(1).toLocaleLowerCase()}Selected`]
               return(
                 <div
-                  id={filter}
-                  key={filter}
-                  onClick={() => handleFilterSelected(filter)}
+                  id={clothingType}
+                  key={clothingType}
+                  onClick={() => handleClothingTypeSelected(clothingType)}
                   className={`filter-pills ${isSelected ? 'active' : 'inactive'}`} >
-                  {filter}
+                  {clothingType}
                 </div>
               )
             })

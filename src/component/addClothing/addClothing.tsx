@@ -2,7 +2,7 @@ import * as React from 'react';
 import './addClothing.css';
 
 interface AddClothingProps {
-  filters                     : string[];
+  clothingTypes                     : string[];
   handleCloseAddClothingPage  : () => void;
 }
 interface AddClothingState {
@@ -26,7 +26,6 @@ class AddClothing extends React.PureComponent< AddClothingProps, AddClothingStat
   }
 
   public handleOnSubmit = () => {
-    console.log('submit')
     const {
       name,
       image,
@@ -55,6 +54,9 @@ class AddClothing extends React.PureComponent< AddClothingProps, AddClothingStat
 
   public render() {
     const xIcon = require('../../utilities/open-iconic-master/svg/x.svg')
+
+    const { clothingTypes } = this.props
+
     const {
       name,
       image,
@@ -62,6 +64,7 @@ class AddClothing extends React.PureComponent< AddClothingProps, AddClothingStat
       date_bought,
       type
     } = this.state
+
     return(
       <div id="new-clothes-form">
         <div className="row">
@@ -81,7 +84,7 @@ class AddClothing extends React.PureComponent< AddClothingProps, AddClothingStat
             <div className="offset-2 col-8">
               <select id="clothe-category" defaultValue={type} onChange={(e) => this.setState({ type: e.currentTarget.value })}>
                 <option value="" disabled={true}>CATEGORY...</option>
-                { this.props.filters.map(f => <option key={f} value={f.toLowerCase()}>{f}</option>)}
+                { clothingTypes.map( (f: string) => <option key={f} value={f.toLowerCase()}>{f}</option>)}
               </select>
             </div>
           </div>

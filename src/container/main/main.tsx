@@ -9,7 +9,7 @@ import UserSettingIcon from '../../component/userSettingIcon/userSettingIcon';
 import UserSettingPage from '../../component/userSettingPage/userSettingPage';
 import './main.css';
 
-const CLOTHES_FILTERS = [
+const CLOTHING_TYPES = [
   "SHOES",
   "PANTS",
   "SHIRTS",
@@ -94,12 +94,12 @@ export default class Main extends React.Component<Props, State> {
         !!val &&
         (prevState[key] !== this.state[key])
       ){
-        !!this.state[key] ? this.fetchType(val) : this.filterData(val)
+        !!this.state[key] ? this.getClothing(val) : this.clothingTypeData(val)
       }
     })
   }
 
-  public filterData = (type: string) => {
+  public clothingTypeData = (type: string) => {
     this.setState((prevState: State) => ({
       data: (prevState.data).filter(
         (d:Clothing) => d.clothing_type !== type
@@ -113,19 +113,21 @@ export default class Main extends React.Component<Props, State> {
     )
   }
 
-  public fetchType = (type: string) => {
-    fetch(`http://localhost:4000/clothings/type/${type}`, {
+  public getClothing = (clothingType: string) => {
+    fetch(`http://localhost:4000/clothings/type/${clothingType}`, {
       method: 'GET'
     })
     .then(response => response.json())
     .then(d => this.concatData(d))
   }
 
-  public handleCloseAddClothingPage = () => this.setState({ isAddClothingPageOpen: false })
-  public handleOpenAddClothingPage  = () => this.setState({ isAddClothingPageOpen: true  })
+  public handleCloseAddClothingPage   = () => this.setState({ isAddClothingPageOpen: false })
+  public handleOpenAddClothingPage    = () => this.setState({ isAddClothingPageOpen: true  })
+  public handleCloseEditClothingPage  = () => this.setState({ isEditClothingPageOpen: false})
+  public handleOpenEditClothingPage   = () => this.setState({ isEditClothingPageOpen: true })
 
-  public handleFilterSelected = (filter: string) => {
-    const stateString = `is${filter[0] + filter.substr(1).toLocaleLowerCase()}Selected`
+  public handleClothingTypeSelected = (clothingType: string) => {
+    const stateString = `is${clothingType[0] + clothingType.substr(1).toLocaleLowerCase()}Selected`
     this.setState((prevState:State) =>  ({[stateString]: !prevState[stateString] } as any)); // workaround https://stackoverflow.com/questions/46305939/dynamic-object-key-with-typescript-in-react-event-handler
   }
 
@@ -166,9 +168,9 @@ export default class Main extends React.Component<Props, State> {
     const showDefaultPage = !(isHamburgerOpen || isUserSettingPageOpen || isAddClothingPageOpen)
 
     const menuProps = {
-      filters               : CLOTHES_FILTERS,
-      handleFilterSelected  : this.handleFilterSelected,
-      handleClearSelected   : this.handleClearSelected,
+      clothingTypes               : CLOTHING_TYPES,
+      handleClothingTypeSelected  : this.handleClothingTypeSelected,
+      handleClearSelected         : this.handleClearSelected,
       isShoesSelected,
       isPantsSelected,
       isShirtsSelected,
@@ -182,13 +184,17 @@ export default class Main extends React.Component<Props, State> {
     }
 
     const addClothingProps = {
-      filters                       : CLOTHES_FILTERS,
+      clothingTypes                     : CLOTHING_TYPES,
       handleCloseAddClothingPage  : this.handleCloseAddClothingPage
+    }
+
+    const editClothingProps = {
+      handleCloseEditClothingPage : this.handleCloseEditClothingPage
     }
 
     const defaultPageProps = {
       menuProps,
-      clothes                     : data,
+      clothes                   : data,
       handleOpenAddClothingPage : this.handleOpenAddClothingPage
     }
 
@@ -200,7 +206,7 @@ export default class Main extends React.Component<Props, State> {
           <div className="col-2 user-icon">{isUserSettingPageOpen ? <UserSettingPage /> : <UserSettingIcon />}</div>
         </div>
         { isAddClothingPageOpen && <AddClothing {...addClothingProps} /> }
-        { isEditClothingPageOpen && <EditClothing /> }
+        { isEditClothingPageOpen && <EditClothing {...editClothingProps} /> }
         { showDefaultPage && <DefaultPage {...defaultPageProps} /> }
       </div>
     )

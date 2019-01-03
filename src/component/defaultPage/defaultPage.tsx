@@ -2,8 +2,8 @@ import * as React from 'react';
 import Menu from '../menu/menu';
 
 interface MenuProps {
-  filters               : string[];
-  handleFilterSelected  : (x: string) => void;
+  clothingTypes               : string[];
+  handleClothingTypeSelected  : (x: string) => void;
   handleClearSelected   : () => void;
   isShoesSelected       : boolean;
   isPantsSelected       : boolean;
