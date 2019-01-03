@@ -8,10 +8,9 @@ interface TitleState {
 }
 
 class Title extends React.PureComponent<TitleProps, TitleState> {
-
+  private titleImg = require('../../images/title.png')
   public render() {
-    const titleImg = require('../../images/title.png')
-    return <img src={titleImg} />;
+    return <img src={this.titleImg} />;
   }
 
 }

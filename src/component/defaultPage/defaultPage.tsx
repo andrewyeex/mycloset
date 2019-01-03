@@ -26,6 +26,9 @@ interface Props {
 }
 
 class DefaultPage extends React.PureComponent< Props , {}  > {
+
+  private addIcon = require('../../utilities/open-iconic-master/svg/plus.svg');
+
   public renderCards = (clothingsArr: Clothing[]) => {
     return clothingsArr.map(
       (clothing: Clothing) => {
@@ -48,7 +51,6 @@ class DefaultPage extends React.PureComponent< Props , {}  > {
   }
 
   public render () {
-    const addIcon = require('../../utilities/open-iconic-master/svg/plus.svg');
 
     const {
       menuProps,
@@ -65,11 +67,11 @@ class DefaultPage extends React.PureComponent< Props , {}  > {
         </div>
         <div className="row main-content">
           <div className="card-container">
-            {this.renderCards(clothingsArr)}
+            {!!clothingsArr.length && this.renderCards(clothingsArr)}
             <div
               className="clothe-card add"
               onClick={handleOpenAddClothingPage}>
-              <img src={addIcon} alt="Add New Clothes" />
+              <img src={this.addIcon} alt="Add New Clothes" />
             </div>
           </div>
         </div>

@@ -1,3 +1,4 @@
+import axios from 'axios';
 import * as React from 'react';
 import {
   Clothing,
@@ -35,6 +36,8 @@ class EditClothing extends React.PureComponent< Props, Clothing > {
     }
   }
 
+  private xIcon = require('../../utilities/open-iconic-master/svg/x.svg')
+
   public handleOnUpdate = () => {
     const {
       id,
@@ -46,29 +49,25 @@ class EditClothing extends React.PureComponent< Props, Clothing > {
       date_bought,
       clothing_type
     } = this.state
-    fetch(`http://localhost:4000/clothings/${id}`,{
-      method: 'PUT',
-      mode: 'no-cors',
-      body: JSON.stringify({
-        name,
-        brand,
-        color,
-        image,
-        note,
-        date_bought,
-        clothing_type
-      }),
-      headers:{
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
+
+    axios.put(`http://localhost:4000/clothings/${id}`, {
+      name,
+      brand,
+      color,
+      image,
+      note,
+      date_bought,
+      clothing_type
+    }).then(
+      res => {
+        console.log(res)
+        console.log(res.data)
+        alert('SUCCESS')
       }
-    })
-    .then (response=>alert('SUCCESS'))
-    .catch(error => alert('ERROR'))
+    )
   }
 
   public render(){
-    const xIcon = require('../../utilities/open-iconic-master/svg/x.svg')
 
     const {
       handleCloseEditClothingPage
@@ -88,7 +87,7 @@ class EditClothing extends React.PureComponent< Props, Clothing > {
       <div id="edit-clothing">
         <div className="row">
           <div className="col-1 offset-11 align-right">
-            <img src={xIcon} id="x-icon" onClick={handleCloseEditClothingPage}/>
+            <img src={this.xIcon} id="x-icon" onClick={handleCloseEditClothingPage}/>
           </div>
         </div>
         <form>
@@ -114,7 +113,7 @@ class EditClothing extends React.PureComponent< Props, Clothing > {
                 className="form-control-plaintext clothes-text-input"
                 placeholder="NAME"
                 id="clothe-name"
-                value={name}
+                value={name || ''}
                 onChange={(e) => this.setState({ name: e.currentTarget.value })}
               />
             </div>
@@ -127,7 +126,7 @@ class EditClothing extends React.PureComponent< Props, Clothing > {
                 className="form-control-plaintext clothes-text-input"
                 placeholder="BRAND"
                 id="clothe-brand"
-                value={brand}
+                value={brand || ''}
                 onChange={(e) => this.setState({ name: e.currentTarget.value })}
               />
             </div>
@@ -140,7 +139,7 @@ class EditClothing extends React.PureComponent< Props, Clothing > {
                 className="form-control-plaintext clothes-text-input"
                 placeholder="COLOR"
                 id="clothe-color"
-                value={color}
+                value={color || ''}
                 onChange={(e) => this.setState({ name: e.currentTarget.value })}
               />
             </div>
@@ -153,7 +152,7 @@ class EditClothing extends React.PureComponent< Props, Clothing > {
                 className="form-control-plaintext clothes-text-input"
                 placeholder="IMAGE PATH"
                 id="clothe-image"
-                value={image}
+                value={image || ''}
                 onChange={(e) => this.setState({ image: e.currentTarget.value })}
               />
             </div>
@@ -166,7 +165,7 @@ class EditClothing extends React.PureComponent< Props, Clothing > {
                 className="form-control-plaintext clothes-text-input"
                 placeholder="DATE"
                 id="clothe-date-bought"
-                value={date_bought}
+                value={date_bought || ''}
                 onChange={(e) => this.setState({ date_bought: e.currentTarget.value })}
               />
             </div>
@@ -179,7 +178,7 @@ class EditClothing extends React.PureComponent< Props, Clothing > {
                 className="form-control-plaintext clothes-text-input"
                 id="clothe-note"
                 placeholder="NOTES"
-                value={note}
+                value={note || ''}
                 onChange={(e)=>this.setState({ note: e.currentTarget.value })}
               />
             </div>
