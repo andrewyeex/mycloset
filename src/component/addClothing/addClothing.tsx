@@ -29,7 +29,7 @@ class AddClothing extends React.PureComponent< AddClothingProps, AddClothingStat
       image       : '',
       note        : '',
       date_bought : '',
-      clothing_type        : ''
+      clothing_type : ''
     }
   }
 

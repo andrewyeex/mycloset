@@ -124,16 +124,14 @@ export default class Main extends React.Component<Props, State> {
     }))
   }
 
-  public concatData = (d: {data: Clothing[]}) => {
-    this.setState(
-      (prevState: State) => ({ data: prevState.data.concat(d.data) })
-    )
-  }
-
   public getClothing = (clothingType: string) => {
     axios
       .get(`http://localhost:4000/clothings/type/${clothingType}`)
-      .then( res => this.concatData(res.data) )
+      .then( res =>
+        this.setState(
+          (prevState: State) => ({ data: [...res.data.data, ...prevState.data] })
+        )
+      )
   }
 
   public handleCloseAddClothingPage   = () => this.setState({ isAddClothingPageOpen: false })
