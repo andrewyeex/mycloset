@@ -1,8 +1,7 @@
 #main {
   background: white;
   margin: 0 auto;
-  height: 100vh;
-  max-width: 1280px; }
+  height: 100vh; }
   #main h1 {
     text-align: center; }
   #main div.top-bar, #main div.menu {
@@ -28,11 +27,11 @@
     #main div.main-content .clothe-card-overlay:hover {
       background: #00000080; }
     #main div.main-content .clothe-card {
-      border: 1px solid;
-      border-radius: 15px;
+      border: 1px solid #c9c9c9;
+      border-radius: 3px;
       padding: 10px;
-      margin: 5px;
-      height: 350px;
+      margin: 40px;
+      height: 325px;
       width: 225px;
       display: flex;
       justify-content: center;

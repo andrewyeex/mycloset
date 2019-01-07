@@ -6,6 +6,11 @@
 # images
 /public/shoes
 /public/pants
+/public/sweaters
+/public/hoodies
+/public/shirts
+/public/polos
+/public/jackets
 
 # testing
 /coverage
