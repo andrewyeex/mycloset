@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Clothing } from '../../container/main/main';
+import { Clothing } from '../../App';
 import ClothingCards from '../clothingCards/clothingCards';
 import Menu from '../menu/menu';
 

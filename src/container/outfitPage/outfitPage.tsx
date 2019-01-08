@@ -1,125 +1,90 @@
 import axios from 'axios';
 import * as React from 'react';
-import ClothingCards from '../../component/clothingCards/clothingCards'
-import { Clothing } from '../main/main';
+import {
+  Clothing,
+  Outfit
+} from '../../App';
+import AddOutfit from '../../component/addOutfit/addOutfit';
+import OutfitRow from '../../component/outfitRow/outfitRow';
+import { filterByClothingType } from '../../utilities/helper';
+
+
+// import ClothingCards from '../../component/clothingCards/clothingCards'
+
 import './outfitPage.css'
 
+interface Props {
+  outfits                 : Outfit[];
+  clothings               : Clothing[];
+}
 interface State {
-  data       : Clothing[];
-  clothingsArr: Clothing[];
-  headwearSelected : number;
-  topSelected : number;
-  bottomSelected : number;
-  shoesSelected : number;
-  isModalContainerOpen : boolean;
-  handleClothingSelected : (id: number) => void;
+  headwear      : Clothing[];
+  top           : Clothing[];
+  bottom        : Clothing[];
+  shoes         : Clothing[];
+  isModalContainerOpen    : boolean;
+  isAddOutfitPageOpen     : boolean;
+  // handleClothingSelected  : (clothing: Clothing) => void;
 }
 
-class OutfitPage extends React.Component < {}, State > {
-  private addIcon = require('../../utilities/open-iconic-master/svg/plus.svg');
-  constructor(props: {}){
+// const initialClothing = {
+//   id            : 0,
+//   name          : 'initial',
+//   brand         : 'initial',
+//   color         : 'initial',
+//   image         : 'initial',
+//   note          : 'initial',
+//   date_bought   : 'initial',
+//   clothing_type : 'initial'
+// }
+
+class OutfitPage extends React.Component < Props, State > {
+  // private addIcon = require('../../utilities/open-iconic-master/svg/plus.svg');
+  constructor(props: Props){
     super(props)
+    const { clothings } = props
     this.state = {
-      data : [],
-      clothingsArr: [],
-      headwearSelected : 0,
-      topSelected : 0,
-      bottomSelected : 0,
-      shoesSelected : 0,
-      isModalContainerOpen: false,
-      handleClothingSelected : (id: number) => alert('select something')
+      headwear      : filterByClothingType( clothings , ['hat']),
+      top           : filterByClothingType( clothings , ['jackets, sweaters, shirts, polos']),
+      bottom        : filterByClothingType( clothings , ['pants']),
+      shoes         : filterByClothingType( clothings , ['shoes']),
+      isModalContainerOpen  : false,
+      isAddOutfitPageOpen   : false,
+      // handleClothingSelected : (clothing: Clothing) => alert('select something')
     }
   }
-  public componentDidMount = () => {
-    // fetch all data and store
-    axios.all([
-      axios.get('http://localhost:4000/clothings/type/shoes'),
-      axios.get('http://localhost:4000/clothings/type/shirts'),
-      axios.get('http://localhost:4000/clothings/type/pants'),
-      axios.get('http://localhost:4000/clothings/type/polos'),
-      axios.get('http://localhost:4000/clothings/type/jackets'),
-      axios.get('http://localhost:4000/clothings/type/sweaters'),
-      axios.get('http://localhost:4000/clothings/type/hoodies'),
-    ])
-    .then(axios.spread((shoes, shirts, pants, polos, jackets, sweaters, hoodies) => {
-      const data = [
-        ...shoes.data.data,
-        ...shirts.data.data,
-        ...pants.data.data,
-        ...polos.data.data,
-        ...jackets.data.data,
-        ...sweaters.data.data,
-        ...hoodies.data.data
-      ]
-      this.setState({ data })
-    }));
-  }
 
-  public handleSelectHeadwear = (clothingID: number) => this.setState({ headwearSelected  : clothingID })
-  public handleSelectTop      = (clothingID: number) => this.setState({ topSelected       : clothingID })
-  public handleSelectBottom   = (clothingID: number) => this.setState({ bottomSelected    : clothingID })
-  public handleSelectShoes    = (clothingID: number) => this.setState({ shoesSelected     : clothingID })
+  public handleSubmitOutfit = (outfit : Outfit) => {
+    !!outfit.id ?
+      axios.put(`http://localhost:4000/outfits/${outfit.id}`, outfit).then(res => console.log({res})) :
+      axios.post('http://localhost:4000/outfits/', outfit).then(res => console.log({res}))
+  }
 
   public render(){
     const {
-      clothingsArr,
-      handleClothingSelected,
-      isModalContainerOpen
+      clothings
+    } = this.props
+    const {
+      isAddOutfitPageOpen,
+      headwear,
+      top,
+      bottom,
+      shoes
     } = this.state
-    const clothingCardsProps = {
-      clothings : clothingsArr,
-      handleClothingSelected
+    const outfitProps = {
+      clothings,
+      headwear,
+      top,
+      bottom,
+      shoes,
+      handleSubmitOutfit : this.handleSubmitOutfit
     }
+
     return(
       <div className="row main-content">
-        <div className="card-container">
-          <div className="row" >
-            <div className="col-3">
-              <div
-              className="clothe-card add"
-              onClick={()=>alert('HEADWEAR')}>
-              HEADWEAR
-                <img src={this.addIcon} alt="Add New Clothes" />
-              </div>
-            </div>
-            <div className="col-3">
-              <div
-              className="clothe-card add"
-              onClick={()=>{
-                this.setState({
-                  isModalContainerOpen: true,
-                  handleClothingSelected: (id: number) => this.handleSelectTop(id)
-                })
-              }}>
-              TOP
-                <img src={this.addIcon} alt="Add New Clothes" />
-              </div>
-            </div>
-            <div className="col-3">
-              <div
-                className="clothe-card add"
-                onClick={()=>alert('BOTTOM')}>
-                BOTTOM
-                <img src={this.addIcon} alt="Add New Clothes" />
-              </div>
-            </div>
-            <div className="col-3">
-              <div
-              className="clothe-card add"
-              onClick={()=>alert('SHOES')}>
-              SHOES
-                <img src={this.addIcon} alt="Add New Clothes" />
-              </div>
-            </div>
-          </div>
-          {isModalContainerOpen &&
-            <div className="card-modal-container">
-              <div className="card-modal">
-                {!!clothingsArr.length && <ClothingCards {...clothingCardsProps} />}
-              </div>
-            </div>
-          }
-        </div>
+        {isAddOutfitPageOpen && < AddOutfit {...outfitProps} />}
+        {clothings.map((clothing : Clothing) => <OutfitRow key={clothing.id} {...outfitProps} />)}
+        {/* ADD NEW OUTFIT BUTTON */}
       </div>
     )
   }

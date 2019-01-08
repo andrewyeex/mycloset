@@ -3,7 +3,7 @@ import * as React from 'react';
 import {
   Clothing,
   CLOTHING_TYPES
-} from '../../container/main/main'
+} from '../../App';
 import './editClothing.css';
 
 interface Props {
