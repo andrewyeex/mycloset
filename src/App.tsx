@@ -2,6 +2,7 @@ import axios from 'axios';
 import * as React from 'react';
 import './App.css';
 import Main from './container/main/main';
+import { filterByClothingType } from './utilities/helper';
 
 export interface Clothing {
   id            : number;
@@ -24,7 +25,11 @@ export interface Outfit {
 
 interface State {
   clothings : Clothing[],
-  outfits   : Outfit[]
+  outfits   : Outfit[],
+  headwear  : Clothing[];
+  top       : Clothing[];
+  bottom    : Clothing[];
+  shoes     : Clothing[];
 }
 
 export const CLOTHING_TYPES = [
@@ -51,7 +56,11 @@ export default class App extends React.Component < {}, State > {
         top       : [],
         bottom    : [],
         shoes     : []
-      }]
+      }],
+      headwear: [],
+      top : [],
+      bottom : [],
+      shoes : []
     }
   }
   public componentDidMount = () => {
@@ -78,6 +87,10 @@ export default class App extends React.Component < {}, State > {
       ]
       this.setState({
         clothings,
+        headwear      : filterByClothingType( clothings , ['hat']),
+        top           : filterByClothingType( clothings , ['jackets', 'sweaters', 'shirts', 'polos']),
+        bottom        : filterByClothingType( clothings , ['pants']),
+        shoes         : filterByClothingType( clothings , ['shoes']),
         outfits : outfits.data.data
       })
     }));
@@ -85,12 +98,20 @@ export default class App extends React.Component < {}, State > {
   public render() {
     const {
       clothings,
-      outfits
+      outfits,
+      headwear,
+      top,
+      bottom,
+      shoes
     } = this.state
 
     const mainProps = {
       clothings,
-      outfits
+      outfits,
+      headwear,
+      top,
+      bottom,
+      shoes
     }
     return (
       <div className="container-fluid">

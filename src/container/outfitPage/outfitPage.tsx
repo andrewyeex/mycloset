@@ -5,71 +5,55 @@ import {
   Outfit
 } from '../../App';
 import AddOutfit from '../../component/addOutfit/addOutfit';
-import OutfitRow from '../../component/outfitRow/outfitRow';
-import { filterByClothingType } from '../../utilities/helper';
-
-
-// import ClothingCards from '../../component/clothingCards/clothingCards'
+// import OutfitRow from '../../component/outfitRow/outfitRow';
 
 import './outfitPage.css'
 
 interface Props {
-  outfits                 : Outfit[];
-  clothings               : Clothing[];
-}
-interface State {
+  outfits       : Outfit[];
+  clothings     : Clothing[];
   headwear      : Clothing[];
   top           : Clothing[];
   bottom        : Clothing[];
   shoes         : Clothing[];
+}
+interface State {
   isModalContainerOpen    : boolean;
   isAddOutfitPageOpen     : boolean;
-  // handleClothingSelected  : (clothing: Clothing) => void;
 }
 
-// const initialClothing = {
-//   id            : 0,
-//   name          : 'initial',
-//   brand         : 'initial',
-//   color         : 'initial',
-//   image         : 'initial',
-//   note          : 'initial',
-//   date_bought   : 'initial',
-//   clothing_type : 'initial'
-// }
-
 class OutfitPage extends React.Component < Props, State > {
-  // private addIcon = require('../../utilities/open-iconic-master/svg/plus.svg');
   constructor(props: Props){
     super(props)
-    const { clothings } = props
     this.state = {
-      headwear      : filterByClothingType( clothings , ['hat']),
-      top           : filterByClothingType( clothings , ['jackets, sweaters, shirts, polos']),
-      bottom        : filterByClothingType( clothings , ['pants']),
-      shoes         : filterByClothingType( clothings , ['shoes']),
       isModalContainerOpen  : false,
-      isAddOutfitPageOpen   : false,
+      isAddOutfitPageOpen   : true,
       // handleClothingSelected : (clothing: Clothing) => alert('select something')
     }
   }
 
   public handleSubmitOutfit = (outfit : Outfit) => {
+    const payload = {
+      headwear  : [outfit.id],
+      top       : [outfit.id],
+      bottom    : [outfit.id],
+      shoes     : [outfit.id]
+    }
     !!outfit.id ?
-      axios.put(`http://localhost:4000/outfits/${outfit.id}`, outfit).then(res => console.log({res})) :
-      axios.post('http://localhost:4000/outfits/', outfit).then(res => console.log({res}))
+      axios.put(`http://localhost:4000/outfits/${outfit.id}`, payload).then(res => console.log({res})) :
+      axios.post('http://localhost:4000/outfits/', payload).then(res => console.log({res}))
   }
 
   public render(){
     const {
-      clothings
-    } = this.props
-    const {
-      isAddOutfitPageOpen,
+      clothings,
       headwear,
       top,
       bottom,
       shoes
+    } = this.props
+    const {
+      isAddOutfitPageOpen
     } = this.state
     const outfitProps = {
       clothings,
@@ -82,9 +66,10 @@ class OutfitPage extends React.Component < Props, State > {
 
     return(
       <div className="row main-content">
-        {isAddOutfitPageOpen && < AddOutfit {...outfitProps} />}
-        {clothings.map((clothing : Clothing) => <OutfitRow key={clothing.id} {...outfitProps} />)}
+        { isAddOutfitPageOpen && < AddOutfit {...outfitProps} /> }
+        {/* {clothings.map((clothing : Clothing) => <OutfitRow key={clothing.id} {...outfitProps} />)} */}
         {/* ADD NEW OUTFIT BUTTON */}
+        {/**  <OutfitSelectorModal />  */}
       </div>
     )
   }

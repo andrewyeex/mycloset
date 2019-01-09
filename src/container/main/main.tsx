@@ -32,6 +32,10 @@ const stateArr = [
 interface Props {
   clothings : Clothing[];
   outfits   : Outfit[];
+  headwear  : Clothing[];
+  top       : Clothing[];
+  bottom    : Clothing[];
+  shoes     : Clothing[];
 }
 
 interface State {
@@ -68,7 +72,7 @@ export default class Main extends React.Component<Props, State> {
         date_bought : '',
         clothing_type : ''
       },
-      isClothesPage         : true,
+      isClothesPage         : false,
       isHamburgerOpen       : false,
       isUserSettingPageOpen : false,
       isEditClothingPageOpen: false,
@@ -149,7 +153,11 @@ export default class Main extends React.Component<Props, State> {
   public render(){
     const {
       clothings,
-      outfits
+      outfits,
+      headwear,
+      top,
+      bottom,
+      shoes
     } = this.props
 
     const {
@@ -208,7 +216,11 @@ export default class Main extends React.Component<Props, State> {
 
     const outfitPageProps = {
       clothings,
-      outfits
+      outfits,
+      headwear,
+      top,
+      bottom,
+      shoes
     }
 
     return(
