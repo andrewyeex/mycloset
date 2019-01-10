@@ -1,17 +1,17 @@
 import axios from 'axios';
 import * as React from 'react';
 import {
-  Clothing,
+  IClothing,
   CLOTHING_TYPES
 } from '../../App';
 import './editClothing.css';
 
 interface Props {
-  currentClothingValues       : Clothing;
-  handleCloseEditClothingPage : () => void;
+  currentClothingValues       : IClothing;
+  handleCloseEditClothing : () => void;
 }
 
-class EditClothing extends React.PureComponent< Props, Clothing > {
+class EditClothing extends React.PureComponent< Props, IClothing > {
 
   private xIcon = require('../../utilities/open-iconic-master/svg/x.svg')
 
@@ -73,7 +73,7 @@ class EditClothing extends React.PureComponent< Props, Clothing > {
   public render(){
 
     const {
-      handleCloseEditClothingPage
+      handleCloseEditClothing
     } = this.props
 
     const {
@@ -90,7 +90,7 @@ class EditClothing extends React.PureComponent< Props, Clothing > {
       <div id="edit-clothing">
         <div className="row">
           <div className="col-1 offset-11 align-right">
-            <img src={this.xIcon} id="x-icon" onClick={handleCloseEditClothingPage}/>
+            <img src={this.xIcon} id="x-icon" onClick={handleCloseEditClothing}/>
           </div>
         </div>
         <form>

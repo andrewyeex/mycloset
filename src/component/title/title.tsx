@@ -1,11 +1,6 @@
 import * as React from 'react';
 
-class Title extends React.PureComponent< {}, {} > {
-  private titleImg = require('../../images/title.png')
-  public render() {
-    return <img src={this.titleImg} />;
-  }
-
-}
+const titleImg = require('../../images/title.png')
+const Title = () => <img src={titleImg} />;
 
 export default Title;

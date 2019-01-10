@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Clothing } from '../../App';
+import { IClothing } from '../../App';
 import ClothingCards from '../clothingCards/clothingCards';
 import Menu from '../menu/menu';
 
@@ -21,12 +21,12 @@ interface MenuProps {
 
 interface Props {
   menuProps                   : MenuProps;
-  clothingsArr                : Clothing[];
-  handleClothingSelected      : (clothing: Clothing) => void;
-  handleOpenAddClothingPage   : () => void;
+  clothingsArr                : IClothing[];
+  handleClothingSelected      : (clothing: IClothing) => void;
+  handleOpenAddClothing       : () => void;
 }
 
-class DefaultPage extends React.PureComponent< Props , {}  > {
+class Clothing extends React.PureComponent< Props , {}  > {
 
   private addIcon = require('../../utilities/open-iconic-master/svg/plus.svg');
 
@@ -36,7 +36,7 @@ class DefaultPage extends React.PureComponent< Props , {}  > {
       menuProps,
       clothingsArr,
       handleClothingSelected,
-      handleOpenAddClothingPage
+      handleOpenAddClothing
     } = this.props
 
     const clothingCardsProps = {
@@ -55,7 +55,7 @@ class DefaultPage extends React.PureComponent< Props , {}  > {
           <div className="card-container">
             <div
                 className="clothe-card add"
-                onClick={handleOpenAddClothingPage}>
+                onClick={handleOpenAddClothing}>
                 <img src={this.addIcon} alt="Add New Clothes" />
               </div>
             {!!clothingsArr.length && <ClothingCards {...clothingCardsProps} />}
@@ -66,4 +66,4 @@ class DefaultPage extends React.PureComponent< Props , {}  > {
   }
 }
 
-export default DefaultPage;
+export default Clothing;

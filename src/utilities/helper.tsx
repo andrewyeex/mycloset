@@ -1,8 +1,8 @@
 import {
-  Clothing
+  IClothing
 } from '../App'
 
-export const filterByClothingType = (clothings : Clothing[], types : string[]) => {
+export const filterByClothingType = (clothings : IClothing[], types : string[]) => {
   console.log({clothings})
   return clothings.filter(
     clothing => {
@@ -15,4 +15,4 @@ export const filterByClothingType = (clothings : Clothing[], types : string[]) =
   )
 }
 
-export const getImageArr = (clothings : Clothing[]) => !!clothings.length ? clothings.map(clothing => clothing.image) : []
+export const getImageArr = (clothings : IClothing[]) => !!clothings.length ? clothings.map(clothing => clothing.image) : []

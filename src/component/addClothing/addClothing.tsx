@@ -4,7 +4,7 @@ import './addClothing.css';
 
 interface AddClothingProps {
   clothingTypes               : string[];
-  handleCloseAddClothingPage  : () => void;
+  handleCloseAddClothing  : () => void;
 }
 interface AddClothingState {
   name        : string;
@@ -79,7 +79,7 @@ class AddClothing extends React.PureComponent< AddClothingProps, AddClothingStat
       <div id="new-clothes-form">
         <div className="row">
           <div className="col-1 offset-11 align-right">
-            <img src={this.xIcon} id="x-icon" onClick={this.props.handleCloseAddClothingPage}/>
+            <img src={this.xIcon} id="x-icon" onClick={this.props.handleCloseAddClothing}/>
           </div>
         </div>
         <form>

@@ -1,10 +1,10 @@
 import * as React from 'react';
-import { Clothing } from 'src/App';
+import { IClothing } from 'src/App';
 
 interface Props {
-  clothings : Clothing[];
+  clothings : IClothing[];
   handleCardClick : (x: object) => void;
-  handleClothingSelected? : (x: Clothing) => void;
+  handleClothingSelected? : (x: IClothing) => void;
   image : string;
   clothing_type : string;
 }

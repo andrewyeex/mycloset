@@ -1,38 +1,38 @@
 import axios from 'axios';
 import * as React from 'react';
 import {
-  Clothing,
-  Outfit
+  IClothing,
+  IOutfit
 } from '../../App';
 import AddOutfit from '../../component/addOutfit/addOutfit';
 // import OutfitRow from '../../component/outfitRow/outfitRow';
 
-import './outfitPage.css'
+import './outfit.css'
 
 interface Props {
-  outfits       : Outfit[];
-  clothings     : Clothing[];
-  headwear      : Clothing[];
-  top           : Clothing[];
-  bottom        : Clothing[];
-  shoes         : Clothing[];
+  outfits       : IOutfit[];
+  clothings     : IClothing[];
+  headwear      : IClothing[];
+  top           : IClothing[];
+  bottom        : IClothing[];
+  shoes         : IClothing[];
 }
 interface State {
   isModalContainerOpen    : boolean;
-  isAddOutfitPageOpen     : boolean;
+  isAddOutfitOpen     : boolean;
 }
 
-class OutfitPage extends React.Component < Props, State > {
+class Outfit extends React.Component < Props, State > {
   constructor(props: Props){
     super(props)
     this.state = {
       isModalContainerOpen  : false,
-      isAddOutfitPageOpen   : true,
+      isAddOutfitOpen   : true,
       // handleClothingSelected : (clothing: Clothing) => alert('select something')
     }
   }
 
-  public handleSubmitOutfit = (outfit : Outfit) => {
+  public handleSubmitOutfit = (outfit : IOutfit) => {
     const payload = {
       headwear  : [outfit.id],
       top       : [outfit.id],
@@ -53,7 +53,7 @@ class OutfitPage extends React.Component < Props, State > {
       shoes
     } = this.props
     const {
-      isAddOutfitPageOpen
+      isAddOutfitOpen
     } = this.state
     const outfitProps = {
       clothings,
@@ -66,7 +66,7 @@ class OutfitPage extends React.Component < Props, State > {
 
     return(
       <div className="row main-content">
-        { isAddOutfitPageOpen && < AddOutfit {...outfitProps} /> }
+        { isAddOutfitOpen && < AddOutfit {...outfitProps} /> }
         {/* {clothings.map((clothing : Clothing) => <OutfitRow key={clothing.id} {...outfitProps} />)} */}
         {/* ADD NEW OUTFIT BUTTON */}
         {/**  <OutfitSelectorModal />  */}
@@ -75,4 +75,4 @@ class OutfitPage extends React.Component < Props, State > {
   }
 }
 
-export default OutfitPage;
+export default Outfit;

@@ -4,7 +4,7 @@ import './App.css';
 import Main from './container/main/main';
 import { filterByClothingType } from './utilities/helper';
 
-export interface Clothing {
+export interface IClothing {
   id            : number;
   name          : string;
   brand         : string;
@@ -15,21 +15,21 @@ export interface Clothing {
   clothing_type : string;
 }
 
-export interface Outfit {
+export interface IOutfit {
   id        : number;
-  headwear  : Clothing[],
-  top       : Clothing[],
-  bottom    : Clothing[],
-  shoes     : Clothing[]
+  headwear  : IClothing[],
+  top       : IClothing[],
+  bottom    : IClothing[],
+  shoes     : IClothing[]
 }
 
 interface State {
-  clothings : Clothing[],
+  clothings : IClothing[],
   outfits   : Outfit[],
-  headwear  : Clothing[];
-  top       : Clothing[];
-  bottom    : Clothing[];
-  shoes     : Clothing[];
+  headwear  : IClothing[];
+  top       : IClothing[];
+  bottom    : IClothing[];
+  shoes     : IClothing[];
 }
 
 export const CLOTHING_TYPES = [
