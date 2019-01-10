@@ -5,6 +5,7 @@ import {
 } from '../../App'
 import ClothingCard from '../clothingCard/clothingCard';
 import ClothingCards from '../clothingCards/clothingCards';
+import './addOutfit.css';
 
 interface Props {
   clothings           : Clothing[];
@@ -57,9 +58,9 @@ class AddOutfit extends React.PureComponent< Props , State > {
         this.setState((prevState : State) => ({ topSelected : [...prevState.topSelected, clothing] }))
     }
   }
-  public handleSelectHeadwear = (clothing: Clothing) => this.setState({ headwearSelected  :  clothing })
-  public handleSelectBottom   = (clothing: Clothing) => this.setState({ bottomSelected    :  clothing })
-  public handleSelectShoes    = (clothing: Clothing) => this.setState({ shoesSelected     :  clothing })
+  public handleSelectHeadwear = (clothing: Clothing) => this.setState({ headwearSelected  :  clothing, isCSelectorOpen : false })
+  public handleSelectBottom   = (clothing: Clothing) => this.setState({ bottomSelected    :  clothing, isCSelectorOpen : false })
+  public handleSelectShoes    = (clothing: Clothing) => this.setState({ shoesSelected     :  clothing, isCSelectorOpen : false })
   public render(){
     const {
       headwear,
@@ -134,7 +135,7 @@ class AddOutfit extends React.PureComponent< Props , State > {
             </div>
           </div>
         </div>
-        { isCSelectorOpen && <div className="clothing-modal"><ClothingCards {...clothingSelectorProps} /></div> }
+        { isCSelectorOpen && <div className="clothing-modal-container"><div className="clothing-modal"><ClothingCards {...clothingSelectorProps} /></div></div> }
       </div>
     )
   }
