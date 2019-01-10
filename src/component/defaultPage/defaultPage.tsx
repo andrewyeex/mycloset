@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { Clothing } from '../../container/main/main'
+import { Clothing } from '../../App';
+import ClothingCards from '../clothingCards/clothingCards';
 import Menu from '../menu/menu';
 
 interface MenuProps {
@@ -29,34 +30,19 @@ class DefaultPage extends React.PureComponent< Props , {}  > {
 
   private addIcon = require('../../utilities/open-iconic-master/svg/plus.svg');
 
-  public renderCards = (clothingsArr: Clothing[]) => {
-    return clothingsArr.map(
-      (clothing: Clothing) => {
-        const {
-          id,
-          image,
-          clothing_type
-        } = clothing
-        return (
-          <div
-            key={id}
-            className="clothe-card"
-            onClick={() => this.props.handleClothingSelected(clothing) }
-          >
-            <img src={`${process.env.PUBLIC_URL}/${clothing_type}/${image}`} alt="Add New Clothes" />
-          </div>
-        )
-      }
-    )
-  }
-
   public render () {
 
     const {
       menuProps,
       clothingsArr,
+      handleClothingSelected,
       handleOpenAddClothingPage
     } = this.props
+
+    const clothingCardsProps = {
+      clothings : clothingsArr,
+      handleClothingSelected
+    }
 
     return(
       <React.Fragment>
@@ -67,12 +53,12 @@ class DefaultPage extends React.PureComponent< Props , {}  > {
         </div>
         <div className="row main-content">
           <div className="card-container">
-            {!!clothingsArr.length && this.renderCards(clothingsArr)}
             <div
-              className="clothe-card add"
-              onClick={handleOpenAddClothingPage}>
-              <img src={this.addIcon} alt="Add New Clothes" />
-            </div>
+                className="clothe-card add"
+                onClick={handleOpenAddClothingPage}>
+                <img src={this.addIcon} alt="Add New Clothes" />
+              </div>
+            {!!clothingsArr.length && <ClothingCards {...clothingCardsProps} />}
           </div>
         </div>
       </React.Fragment>

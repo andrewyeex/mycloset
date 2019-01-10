@@ -1,5 +1,9 @@
-import axios from 'axios';
 import * as React from 'react';
+import {
+  Clothing,
+  CLOTHING_TYPES,
+  Outfit
+} from '../../App'
 import AddClothing from '../../component/addClothing/addClothing';
 import DefaultPage from '../../component/defaultPage/defaultPage';
 import EditClothing from '../../component/editClothing/editClothing';
@@ -8,20 +12,9 @@ import HamburgerPage from '../../component/hamburgerPage/hamburgerPage';
 import Title from '../../component/title/title';
 import UserSettingIcon from '../../component/userSettingIcon/userSettingIcon';
 import UserSettingPage from '../../component/userSettingPage/userSettingPage';
+import OutfitPage from '../outfitPage/outfitPage';
 import './main.css';
 
-export const CLOTHING_TYPES = [
-  "SHOES",
-  "PANTS",
-  "SHIRTS",
-  "POLOS",
-  "TSHIRTS",
-  "JACKETS",
-  "SWEATERS",
-  "HOODIES",
-  "SHORTS",
-  "HEADWEAR"
-]
 
 const stateArr = [
   {isShoesSelected    : 'shoes'   },
@@ -29,7 +22,7 @@ const stateArr = [
   {isShirtsSelected   : 'shirts'  },
   {isPolosSelected    : 'polos'   },
   {isTshirtsSelected  : 'tshirts' },
-  {isJacketsSelected  : 'jacket'  },
+  {isJacketsSelected  : 'jackets'  },
   {isSweatersSelected : 'sweaters'},
   {isHoodiesSelected  : 'hoodies' },
   {isShortsSelected   : 'shorts'  },
@@ -37,23 +30,18 @@ const stateArr = [
 ]
 
 interface Props {
-  name?: string;
-}
-
-export interface Clothing {
-  id          : number;
-  name        : string;
-  brand       : string;
-  color       : string;
-  image       : string;
-  note        : string;
-  date_bought : string;
-  clothing_type : string;
+  clothings : Clothing[];
+  outfits   : Outfit[];
+  headwear  : Clothing[];
+  top       : Clothing[];
+  bottom    : Clothing[];
+  shoes     : Clothing[];
 }
 
 interface State {
-  data                  : Clothing[];
+  clothings             : Clothing[];
   selectedClothing      : Clothing;
+  isClothesPage         : boolean;
   isHamburgerOpen       : boolean;
   isUserSettingPageOpen : boolean;
   isAddClothingPageOpen : boolean;
@@ -84,6 +72,7 @@ export default class Main extends React.Component<Props, State> {
         date_bought : '',
         clothing_type : ''
       },
+      isClothesPage         : false,
       isHamburgerOpen       : false,
       isUserSettingPageOpen : false,
       isEditClothingPageOpen: false,
@@ -98,7 +87,7 @@ export default class Main extends React.Component<Props, State> {
       isHoodiesSelected     : false,
       isShortsSelected      : false,
       isHeadwearSelected    : false,
-      data                  : []
+      clothings             : [],
     }
   }
 
@@ -118,20 +107,20 @@ export default class Main extends React.Component<Props, State> {
 
   public clothingTypeData = (type: string) => {
     this.setState((prevState: State) => ({
-      data: (prevState.data).filter(
+      clothings: (prevState.clothings).filter(
         (d:Clothing) => d.clothing_type !== type
       )
     }))
   }
 
   public getClothing = (clothingType: string) => {
-    axios
-      .get(`http://localhost:4000/clothings/type/${clothingType}`)
-      .then( res =>
-        this.setState(
-          (prevState: State) => ({ data: [...res.data.data, ...prevState.data] })
-        )
-      )
+    // axios
+    //   .get(`http://localhost:4000/clothings/type/${clothingType}`)
+    //   .then( res =>
+    //     this.setState(
+    //       (prevState: State) => ({ data: [...res.data.data, ...prevState.data] })
+    //     )
+    //   )
   }
 
   public handleCloseAddClothingPage   = () => this.setState({ isAddClothingPageOpen: false })
@@ -158,13 +147,21 @@ export default class Main extends React.Component<Props, State> {
     isHoodiesSelected     : false,
     isShortsSelected      : false,
     isHeadwearSelected    : false,
-    data                  : []
+    clothings                  : []
   })
 
   public render(){
+    const {
+      clothings,
+      outfits,
+      headwear,
+      top,
+      bottom,
+      shoes
+    } = this.props
 
     const {
-      data,
+      isClothesPage,
       selectedClothing,
       isHamburgerOpen,
       isUserSettingPageOpen,
@@ -182,7 +179,7 @@ export default class Main extends React.Component<Props, State> {
       isHeadwearSelected
     } = this.state
 
-    const showDefaultPage = !(isHamburgerOpen || isUserSettingPageOpen || isAddClothingPageOpen || isEditClothingPageOpen)
+    const isDefaultPageOpen = !(isHamburgerOpen || isUserSettingPageOpen || isAddClothingPageOpen || isEditClothingPageOpen)
 
     const menuProps = {
       clothingTypes               : CLOTHING_TYPES,
@@ -212,9 +209,18 @@ export default class Main extends React.Component<Props, State> {
 
     const defaultPageProps = {
       menuProps,
-      clothingsArr              : data,
+      clothingsArr              : clothings,
       handleClothingSelected    : this.handleClothingSelected,
       handleOpenAddClothingPage : this.handleOpenAddClothingPage
+    }
+
+    const outfitPageProps = {
+      clothings,
+      outfits,
+      headwear,
+      top,
+      bottom,
+      shoes
     }
 
     return(
@@ -224,9 +230,14 @@ export default class Main extends React.Component<Props, State> {
           <div className="col-8 title"><Title /></div>
           <div className="col-2 user-icon">{isUserSettingPageOpen ? <UserSettingPage /> : <UserSettingIcon />}</div>
         </div>
+        <div className="row" id="clothe-outfit-selector">
+          <div className={`col-6 ${isClothesPage ? 'active' : ''}`} onClick={()=>this.setState({ isClothesPage : true })}>CLOTHES</div>
+          <div className={`col-6 ${isClothesPage ? '' : 'active'}`} onClick={()=>this.setState({ isClothesPage : false })}>OUTFITS</div>
+        </div>
         { isAddClothingPageOpen   && <AddClothing   {...addClothingProps  } /> }
         { isEditClothingPageOpen  && <EditClothing  {...editClothingProps } /> }
-        { showDefaultPage         && <DefaultPage   {...defaultPageProps  } /> }
+        { isClothesPage  && isDefaultPageOpen && <DefaultPage   {...defaultPageProps  } /> }
+        { !isClothesPage && isDefaultPageOpen && <OutfitPage    {...outfitPageProps   } /> }
       </div>
     )
   }

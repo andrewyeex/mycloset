@@ -1,11 +1,19 @@
 # See https://help.github.com/ignore-files/ for more about ignoring files.
 
+# utilities
+/src/utilities/open-iconic-master
+
 # dependencies
 /node_modules
 
 # images
 /public/shoes
 /public/pants
+/public/sweaters
+/public/hoodies
+/public/shirts
+/public/polos
+/public/jackets
 
 # testing
 /coverage

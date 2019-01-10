@@ -3,7 +3,7 @@ import * as React from 'react';
 import {
   Clothing,
   CLOTHING_TYPES
-} from '../../container/main/main'
+} from '../../App';
 import './editClothing.css';
 
 interface Props {
@@ -51,21 +51,23 @@ class EditClothing extends React.PureComponent< Props, Clothing > {
       clothing_type
     } = this.state
 
-    axios.put(`http://localhost:4000/clothings/${id}`, {
-      name,
-      brand,
-      color,
-      image,
-      note,
-      date_bought,
-      clothing_type
-    }).then(
-      res => {
-        console.log(res)
-        console.log(res.data)
-        alert('SUCCESS')
-      }
-    )
+    axios
+      .put(`http://localhost:4000/clothings/${id}`, {
+        name,
+        brand,
+        color,
+        image,
+        note,
+        date_bought,
+        clothing_type
+      })
+      .then(
+        res => {
+          console.log(res)
+          console.log(res.data)
+          alert('SUCCESS')
+        }
+      )
   }
 
   public render(){

@@ -9,16 +9,16 @@
     }
   }
   div.filter-pills {
-    border: 1px solid black;
+    border: 1px solid #cccccc;
     width: 150px;
     float: left;
     margin: 2px;
     transition: .1s;
-    border-radius: 15px;
-    -webkit-border-radius: 15px;
-    -moz-border-radius: 15px;
-    -ms-border-radius: 15px;
-    -o-border-radius: 15px;
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -ms-border-radius: 3px;
+    -o-border-radius: 3px;
     -webkit-transition: .1s;
     -moz-transition: .1s;
     -ms-transition: .1s;
@@ -26,6 +26,7 @@
 }
   div.filter-pills:hover {
     cursor: pointer;
+    background: #c6abcb;
   }
   div.filter-pills.active {
     background: #6d3474;
@@ -36,12 +37,12 @@
     background: #ff0065;
     color: white;
     padding: 4px 0px;
-    border-radius: 15px;
+    border-radius: 3px;
     transition: .2s;
-    -webkit-border-radius: 15px;
-    -moz-border-radius: 15px;
-    -ms-border-radius: 15px;
-    -o-border-radius: 15px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -ms-border-radius: 3px;
+    -o-border-radius: 3px;
     -webkit-transition: .2s;
     -moz-transition: .2s;
     -ms-transition: .2s;

@@ -120,7 +120,7 @@ class AddClothing extends React.PureComponent< AddClothingProps, AddClothingStat
                 placeholder="BRAND"
                 id="clothe-brand"
                 value={brand}
-                onChange={(e) => this.setState({ name: e.currentTarget.value })}
+                onChange={(e) => this.setState({ brand: e.currentTarget.value })}
               />
             </div>
           </div>
@@ -133,7 +133,7 @@ class AddClothing extends React.PureComponent< AddClothingProps, AddClothingStat
                 placeholder="COLOR"
                 id="clothe-color"
                 value={color}
-                onChange={(e) => this.setState({ name: e.currentTarget.value })}
+                onChange={(e) => this.setState({ color: e.currentTarget.value })}
               />
             </div>
           </div>

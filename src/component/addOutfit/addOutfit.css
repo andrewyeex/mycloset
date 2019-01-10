@@ -1,0 +1,16 @@
+.clothing-modal-container {
+  height: 100vh;
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  left: 0;
+  background: #00000033; }
+  .clothing-modal-container .clothing-modal {
+    display: flex;
+    overflow-x: scroll;
+    width: 100vw;
+    background: #141414e6; }
+    .clothing-modal-container .clothing-modal .clothe-card {
+      flex: none; }
