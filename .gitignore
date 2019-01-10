@@ -1,5 +1,8 @@
 # See https://help.github.com/ignore-files/ for more about ignoring files.
 
+# utilities
+/src/utilities/open-iconic-master
+
 # dependencies
 /node_modules
 
