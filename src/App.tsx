@@ -23,9 +23,9 @@ export interface IOutfit {
   shoes     : IClothing[]
 }
 
-interface State {
+interface IState {
   clothings : IClothing[],
-  outfits   : Outfit[],
+  outfits   : IOutfit[],
   headwear  : IClothing[];
   top       : IClothing[];
   bottom    : IClothing[];
@@ -45,7 +45,7 @@ export const CLOTHING_TYPES = [
   "HEADWEAR"
 ]
 
-export default class App extends React.Component < {}, State > {
+export default class App extends React.Component < {}, IState > {
   constructor(props: {}){
     super(props)
     this.state = {

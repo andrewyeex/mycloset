@@ -1,21 +1,21 @@
 import axios from 'axios';
 import * as React from 'react';
 import {
-  IClothing,
-  CLOTHING_TYPES
+  CLOTHING_TYPES,
+  IClothing
 } from '../../App';
 import './editClothing.css';
 
-interface Props {
-  currentClothingValues       : IClothing;
+interface IProps {
+  currentClothingValues   : IClothing;
   handleCloseEditClothing : () => void;
 }
 
-class EditClothing extends React.PureComponent< Props, IClothing > {
+class EditClothing extends React.PureComponent< IProps, IClothing > {
 
   private xIcon = require('../../utilities/open-iconic-master/svg/x.svg')
 
-  constructor(props: Props){
+  constructor(props: IProps){
     super(props)
     const {
       id,

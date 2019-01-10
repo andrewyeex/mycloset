@@ -2,11 +2,11 @@ import axios from 'axios';
 import * as React from 'react';
 import './addClothing.css';
 
-interface AddClothingProps {
+interface IProps {
   clothingTypes               : string[];
   handleCloseAddClothing  : () => void;
 }
-interface AddClothingState {
+interface IState {
   name        : string;
   brand       : string;
   color       : string;
@@ -16,11 +16,11 @@ interface AddClothingState {
   clothing_type : string;
 }
 
-class AddClothing extends React.PureComponent< AddClothingProps, AddClothingState > {
+class AddClothing extends React.PureComponent< IProps, IState > {
 
   private xIcon = require('../../utilities/open-iconic-master/svg/x.svg')
 
-  constructor(props: AddClothingProps){
+  constructor(props: IProps){
     super(props)
     this.state = {
       name        : '',

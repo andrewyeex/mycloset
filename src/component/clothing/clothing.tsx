@@ -3,8 +3,8 @@ import { IClothing } from '../../App';
 import ClothingCards from '../clothingCards/clothingCards';
 import Menu from '../menu/menu';
 
-interface MenuProps {
-  handleClothingTypeSelected  : (x: string) => void;
+interface IMenuProps {
+  handleClothingTypeSelected : (x: string) => void;
   clothingTypes         : string[];
   handleClearSelected   : () => void;
   isShoesSelected       : boolean;
@@ -19,14 +19,14 @@ interface MenuProps {
   isHeadwearSelected    : boolean;
 }
 
-interface Props {
-  menuProps                   : MenuProps;
-  clothingsArr                : IClothing[];
-  handleClothingSelected      : (clothing: IClothing) => void;
-  handleOpenAddClothing       : () => void;
+interface IProps {
+  menuProps               : IMenuProps;
+  clothingsArr            : IClothing[];
+  handleClothingSelected  : (clothing: IClothing) => void;
+  handleOpenAddClothing   : () => void;
 }
 
-class Clothing extends React.PureComponent< Props , {}  > {
+class Clothing extends React.PureComponent< IProps , {}  > {
 
   private addIcon = require('../../utilities/open-iconic-master/svg/plus.svg');
 

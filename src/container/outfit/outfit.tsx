@@ -9,7 +9,7 @@ import AddOutfit from '../../component/addOutfit/addOutfit';
 
 import './outfit.css'
 
-interface Props {
+interface IProps {
   outfits       : IOutfit[];
   clothings     : IClothing[];
   headwear      : IClothing[];
@@ -17,17 +17,17 @@ interface Props {
   bottom        : IClothing[];
   shoes         : IClothing[];
 }
-interface State {
-  isModalContainerOpen    : boolean;
-  isAddOutfitOpen     : boolean;
+interface IState {
+  isModalContainerOpen : boolean;
+  isAddOutfitOpen       : boolean;
 }
 
-class Outfit extends React.Component < Props, State > {
-  constructor(props: Props){
+class Outfit extends React.Component < IProps, IState > {
+  constructor(props: IProps){
     super(props)
     this.state = {
       isModalContainerOpen  : false,
-      isAddOutfitOpen   : true,
+      isAddOutfitOpen       : true,
       // handleClothingSelected : (clothing: Clothing) => alert('select something')
     }
   }

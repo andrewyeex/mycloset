@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { IClothing } from 'src/App';
 
-interface Props {
+interface IProps {
   clothings : IClothing[];
   handleCardClick : (x: object) => void;
   handleClothingSelected? : (x: IClothing) => void;
@@ -9,7 +9,7 @@ interface Props {
   clothing_type : string;
 }
 
-class ClothingCard extends React.PureComponent< Props, {} > {
+class ClothingCard extends React.PureComponent< IProps, {} > {
   private addIcon = require('../../utilities/open-iconic-master/svg/plus.svg');
   public render(){
     const {
