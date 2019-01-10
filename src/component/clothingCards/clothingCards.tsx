@@ -1,14 +1,14 @@
 import * as React from 'react';
-import { Clothing } from '../../App'
+import { IClothing } from '../../App'
 
-interface Props {
-  clothings: Clothing[],
-  handleClothingSelected: (clothing: Clothing) => void;
+interface IProps {
+  clothings: IClothing[],
+  handleClothingSelected: (clothing: IClothing) => void;
 }
 
-class ClothingCards extends React.PureComponent< Props, {} > {
-  public render = () => this.props.clothings.map((clothing:Clothing) => this.renderCards(clothing))
-  private renderCards = (clothing: Clothing) => {
+class ClothingCards extends React.PureComponent< IProps, {} > {
+  public render = () => this.props.clothings.map((clothing:IClothing) => this.renderCards(clothing))
+  private renderCards = (clothing: IClothing) => {
     const {
       id,
       image,

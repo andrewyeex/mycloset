@@ -1,29 +1,29 @@
 import * as React from 'react';
 import {
-  Clothing,
-  Outfit
+  IClothing,
+  IOutfit
 } from '../../App'
 import ClothingCard from '../clothingCard/clothingCard';
 import ClothingCards from '../clothingCards/clothingCards';
 import './addOutfit.css';
 
-interface Props {
-  clothings           : Clothing[];
-  headwear            : Clothing[];
-  top                 : Clothing[];
-  bottom              : Clothing[];
-  shoes               : Clothing[];
-  handleSubmitOutfit  : (x: Outfit) => void;
+interface IProps {
+  clothings           : IClothing[];
+  headwear            : IClothing[];
+  top                 : IClothing[];
+  bottom              : IClothing[];
+  shoes               : IClothing[];
+  handleSubmitOutfit  : (x: IOutfit) => void;
 }
 
-interface State {
+interface IState {
   isCSelectorOpen   : boolean;
-  cSelectorHandler  : (x?: Clothing) => void
-  cSelectorData     : Clothing[];
-  headwearSelected  : Clothing;
-  topSelected       : Clothing[];
-  bottomSelected    : Clothing;
-  shoesSelected     : Clothing;
+  cSelectorHandler  : (x?: IClothing) => void
+  cSelectorData     : IClothing[];
+  headwearSelected  : IClothing;
+  topSelected       : IClothing[];
+  bottomSelected    : IClothing;
+  shoesSelected     : IClothing;
 }
 
 const initialClothing = {
@@ -37,8 +37,8 @@ const initialClothing = {
   clothing_type : 'initial'
 }
 
-class AddOutfit extends React.PureComponent< Props , State > {
-  constructor(props: Props){
+class AddOutfit extends React.PureComponent< IProps , IState > {
+  constructor(props: IProps){
     super(props)
     this.state = {
       isCSelectorOpen   : false,
@@ -50,17 +50,17 @@ class AddOutfit extends React.PureComponent< Props , State > {
       shoesSelected     : initialClothing
     }
   }
-  public handleSelectTop      = (clothing: Clothing) => {
+  public handleSelectTop      = (clothing: IClothing) => {
     const { topSelected } = this.state
     if(!!topSelected.length){
       (topSelected[0].id === 0) ?
         this.setState({ topSelected: [clothing] }) :
-        this.setState((prevState : State) => ({ topSelected : [...prevState.topSelected, clothing] }))
+        this.setState((prevState : IState) => ({ topSelected : [...prevState.topSelected, clothing] }))
     }
   }
-  public handleSelectHeadwear = (clothing: Clothing) => this.setState({ headwearSelected  :  clothing, isCSelectorOpen : false })
-  public handleSelectBottom   = (clothing: Clothing) => this.setState({ bottomSelected    :  clothing, isCSelectorOpen : false })
-  public handleSelectShoes    = (clothing: Clothing) => this.setState({ shoesSelected     :  clothing, isCSelectorOpen : false })
+  public handleSelectHeadwear = (clothing: IClothing) => this.setState({ headwearSelected  :  clothing, isCSelectorOpen : false })
+  public handleSelectBottom   = (clothing: IClothing) => this.setState({ bottomSelected    :  clothing, isCSelectorOpen : false })
+  public handleSelectShoes    = (clothing: IClothing) => this.setState({ shoesSelected     :  clothing, isCSelectorOpen : false })
   public render(){
     const {
       headwear,
@@ -124,7 +124,7 @@ class AddOutfit extends React.PureComponent< Props , State > {
                 <ClothingCard {...headwearCardProps} />
               </div>
               <div className="col-3" >
-                { topSelected.map((t : Clothing) => <ClothingCard key={t.id} {...{...topCardProps, image: t.image, clothing_type : t.clothing_type}} />) }
+                { topSelected.map((t : IClothing) => <ClothingCard key={t.id} {...{...topCardProps, image: t.image, clothing_type : t.clothing_type}} />) }
               </div>
               <div className="col-3" >
                 <ClothingCard {...bottomCardProps} />

@@ -1,12 +1,12 @@
 import * as React from 'react';
 import './menu.css'
 
-interface MenuProps {
+interface IProps {
   clothingTypes               : string[];
   handleClothingTypeSelected  : (id: string) => void;
   handleClearSelected   : () => void;
 }
-class Menu extends React.PureComponent< MenuProps, {} > {
+class Menu extends React.PureComponent< IProps, {} > {
   public static defaultProps = {
     filters: ["SHOES"]
   }
