@@ -53,12 +53,12 @@ class DefaultPage extends React.PureComponent< Props , {}  > {
         </div>
         <div className="row main-content">
           <div className="card-container">
-            {!!clothingsArr.length && <ClothingCards {...clothingCardsProps} />}
             <div
-              className="clothe-card add"
-              onClick={handleOpenAddClothingPage}>
-              <img src={this.addIcon} alt="Add New Clothes" />
-            </div>
+                className="clothe-card add"
+                onClick={handleOpenAddClothingPage}>
+                <img src={this.addIcon} alt="Add New Clothes" />
+              </div>
+            {!!clothingsArr.length && <ClothingCards {...clothingCardsProps} />}
           </div>
         </div>
       </React.Fragment>

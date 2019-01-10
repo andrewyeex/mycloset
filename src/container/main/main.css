@@ -2,6 +2,13 @@
   background: white;
   margin: 0 auto;
   height: 100vh; }
+  #main .row#clothe-outfit-selector div.active {
+    background: black;
+    color: white; }
+  #main .row#clothe-outfit-selector div {
+    text-align: center; }
+  #main .row#clothe-outfit-selector div:hover {
+    cursor: pointer; }
   #main h1 {
     text-align: center; }
   #main div.top-bar, #main div.menu {

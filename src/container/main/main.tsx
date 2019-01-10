@@ -230,9 +230,9 @@ export default class Main extends React.Component<Props, State> {
           <div className="col-8 title"><Title /></div>
           <div className="col-2 user-icon">{isUserSettingPageOpen ? <UserSettingPage /> : <UserSettingIcon />}</div>
         </div>
-        <div className="row">
-          <div className="col-2 offset-4" onClick={()=>this.setState({ isClothesPage : true })}>CLOTHES</div>
-          <div className="col-2 offset-4" onClick={()=>this.setState({ isClothesPage : false })}>OUTFITS</div>
+        <div className="row" id="clothe-outfit-selector">
+          <div className={`col-6 ${isClothesPage ? 'active' : ''}`} onClick={()=>this.setState({ isClothesPage : true })}>CLOTHES</div>
+          <div className={`col-6 ${isClothesPage ? '' : 'active'}`} onClick={()=>this.setState({ isClothesPage : false })}>OUTFITS</div>
         </div>
         { isAddClothingPageOpen   && <AddClothing   {...addClothingProps  } /> }
         { isEditClothingPageOpen  && <EditClothing  {...editClothingProps } /> }
