@@ -100,24 +100,22 @@ export default class Main extends React.Component<IProps, IState> {
         !!val &&
         (prevState[key] !== this.state[key])
       ){
-        !!this.state[key] ? this.getClothing(val) : this.clothingTypeData(val)
+        !!this.state[key] ?
+          this.addClothingToList(val) :
+          this.removeClothingFromList(val)
       }
     })
   }
 
-  public clothingTypeData = (type: string) => {
+  public removeClothingFromList = (type: string) => {
     const filterFn = (clothing : IClothing) => clothing.clothing_type !== type
     this.setState((prevState: IState) => ({ clothings: (prevState.clothings).filter(filterFn) }))
   }
 
-  public getClothing = (clothingType: string) => {
-    // axios
-    //   .get(`http://localhost:4000/clothings/type/${clothingType}`)
-    //   .then( res =>
-    //     this.setState(
-    //       (prevState: IState) => ({ data: [...res.data.data, ...prevState.data] })
-    //     )
-    //   )
+  public addClothingToList = (type: string) => {
+    const { clothings : propClothings} = this.props
+    const clothingsToAdd = propClothings.filter((c : IClothing) => c.clothing_type === type)
+    this.setState((prevState: IState) => ({ clothings : [...prevState.clothings, ...clothingsToAdd]}))
   }
 
   public handleCloseAddClothing   = () => this.setState({ isAddClothingOpen: false })
@@ -149,7 +147,6 @@ export default class Main extends React.Component<IProps, IState> {
 
   public render(){
     const {
-      clothings,
       outfits,
       headwear,
       top,
@@ -158,6 +155,7 @@ export default class Main extends React.Component<IProps, IState> {
     } = this.props
 
     const {
+      clothings,
       isClothing,
       selectedClothing,
       isHamburgerOpen,

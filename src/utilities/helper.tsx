@@ -3,7 +3,6 @@ import {
 } from '../App'
 
 export const filterByClothingType = (clothings : IClothing[], types : string[]) => {
-  console.log({clothings})
   return clothings.filter(
     clothing => {
       return types.some(
