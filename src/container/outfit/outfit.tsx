@@ -1,8 +1,9 @@
 import axios from 'axios';
 import * as React from 'react';
 import {
+  IAddOutfitPayload,
   IClothing,
-  IOutfit
+  IOutfit,
 } from '../../App';
 import AddOutfit from '../../component/addOutfit/addOutfit';
 // import OutfitRow from '../../component/outfitRow/outfitRow';
@@ -19,7 +20,7 @@ interface IProps {
 }
 interface IState {
   isModalContainerOpen : boolean;
-  isAddOutfitOpen       : boolean;
+  isAddOutfitOpen      : boolean;
 }
 
 class Outfit extends React.Component < IProps, IState > {
@@ -32,16 +33,20 @@ class Outfit extends React.Component < IProps, IState > {
     }
   }
 
-  public handleSubmitOutfit = (outfit : IOutfit) => {
+  public handleSubmitOutfit = (outfitPayload : IAddOutfitPayload) => {
+    const {
+      headwearSelected,
+      topSelected,
+      bottomSelected,
+      shoesSelected
+    } = outfitPayload
     const payload = {
-      headwear  : [outfit.id],
-      top       : [outfit.id],
-      bottom    : [outfit.id],
-      shoes     : [outfit.id]
+      headwear  : headwearSelected.id,
+      top       : topSelected.map(t => t.id).join(','),
+      bottom    : bottomSelected.id,
+      shoes     : shoesSelected.id
     }
-    !!outfit.id ?
-      axios.put(`http://localhost:4000/outfits/${outfit.id}`, payload).then(res => console.log({res})) :
-      axios.post('http://localhost:4000/outfits/', payload).then(res => console.log({res}))
+    axios.post('http://localhost:4000/outfits/', payload).then(res => console.log({res}))
   }
 
   public render(){

@@ -4,7 +4,6 @@ import { IClothing } from 'src/App';
 interface IProps {
   clothings : IClothing[];
   handleCardClick : (x: object) => void;
-  handleClothingSelected? : (x: IClothing) => void;
   image : string;
   clothing_type : string;
 }

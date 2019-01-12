@@ -14,3 +14,18 @@
     background: #141414e6; }
     .clothing-modal-container .clothing-modal .clothe-card {
       flex: none; }
+
+#outfit-submit-cancel {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+  #outfit-submit-cancel .row div {
+    color: white;
+    margin: 5px 0px; }
+  #outfit-submit-cancel .row div:hover {
+    cursor: pointer; }
+  #outfit-submit-cancel .row div:first-child {
+    background: #38cb38; }
+  #outfit-submit-cancel .row div:last-child {
+    background: #ff6767; }

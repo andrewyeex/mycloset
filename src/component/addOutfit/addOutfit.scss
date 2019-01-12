@@ -17,3 +17,22 @@
     }
   }
 }
+#outfit-submit-cancel {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .row {
+    div {
+      color: white;
+      margin: 5px 0px;
+    }
+    div:hover { cursor: pointer; }
+    div:first-child {
+      background: #38cb38;
+    }
+    div:last-child {
+      background: #ff6767;
+    }
+  }
+}

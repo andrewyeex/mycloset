@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {
-  IClothing,
-  IOutfit
+  IAddOutfitPayload,
+  IClothing
 } from '../../App'
 import ClothingCard from '../clothingCard/clothingCard';
 import ClothingCards from '../clothingCards/clothingCards';
@@ -13,7 +13,7 @@ interface IProps {
   top                 : IClothing[];
   bottom              : IClothing[];
   shoes               : IClothing[];
-  handleSubmitOutfit  : (x: IOutfit) => void;
+  handleSubmitOutfit  : (x: IAddOutfitPayload) => void;
 }
 
 interface IState {
@@ -50,12 +50,28 @@ class AddOutfit extends React.PureComponent< IProps , IState > {
       shoesSelected     : initialClothing
     }
   }
-  public handleSelectTop      = (clothing: IClothing) => {
+  public setSelector = (handler: ()=>void, data : IClothing[]) => this.setState({ cSelectorHandler: handler, cSelectorData : data  })
+  public handleSubmitOutfit = () => {
+    const { handleSubmitOutfit } = this.props
+    const {
+      headwearSelected,
+      topSelected,
+      bottomSelected,
+      shoesSelected
+    } = this.state
+    handleSubmitOutfit({
+      headwearSelected,
+      topSelected,
+      bottomSelected,
+      shoesSelected
+    })
+  }
+  public handleSelectTop = (clothing: IClothing) => {
     const { topSelected } = this.state
     if(!!topSelected.length){
       (topSelected[0].id === 0) ?
         this.setState({ topSelected: [clothing] }) :
-        this.setState((prevState : IState) => ({ topSelected : [...prevState.topSelected, clothing] }))
+        this.setState((prevState : IState) => ({ topSelected : [...prevState.topSelected, clothing], isCSelectorOpen : false}))
     }
   }
   public handleSelectHeadwear = (clothing: IClothing) => this.setState({ headwearSelected  :  clothing, isCSelectorOpen : false })
@@ -80,20 +96,35 @@ class AddOutfit extends React.PureComponent< IProps , IState > {
     // default values of clothing selected will be passed by props
     const headwearCardProps = {
       clothings: headwear,
-      handleCardClick : () => alert('test'),
-      handleClothingSelected : this.handleSelectHeadwear,
+      handleCardClick : () => {
+        this.setState({
+          cSelectorHandler : this.handleSelectHeadwear,
+          cSelectorData : headwear,
+          isCSelectorOpen : true
+        })
+      },
       image : headwearSelected.image,
       clothing_type : headwearSelected.clothing_type
     }
     const topCardProps = {
       clothings : top,
-      handleCardClick : () => alert('test'),
-      handleClothingSelected : this.handleSelectTop,
+      handleCardClick : () => {
+        this.setState({
+          cSelectorHandler : this.handleSelectTop,
+          cSelectorData : top,
+          isCSelectorOpen : true
+        })
+      }
     }
     const bottomCardProps = {
       clothings : bottom,
-      handleCardClick : () => alert('test'),
-      handleClothingSelected : this.handleSelectBottom,
+      handleCardClick : () => {
+        this.setState({
+          cSelectorHandler : this.handleSelectBottom,
+          cSelectorData : bottom,
+          isCSelectorOpen : true
+        })
+      },
       image : bottomSelected.image,
       clothing_type : bottomSelected.clothing_type
     }
@@ -117,7 +148,14 @@ class AddOutfit extends React.PureComponent< IProps , IState > {
     return(
       <div className="col-12">
         <div className="row">
-          <div className="col-1">test</div>
+          <div className="col-1">
+            <div className="container" id="outfit-submit-cancel">
+              <div className="row">
+                <div className="col-12" id="#outfit-submit" onClick={this.handleSubmitOutfit}>SUBMIT</div>
+                <div className="col-12" id="#outfit-cancel">CANCEL</div>
+              </div>
+            </div>
+          </div>
           <div className="col-11">
             <div className="row">
               <div className="col-3" >
@@ -135,7 +173,7 @@ class AddOutfit extends React.PureComponent< IProps , IState > {
             </div>
           </div>
         </div>
-        { isCSelectorOpen && <div className="clothing-modal-container"><div className="clothing-modal"><ClothingCards {...clothingSelectorProps} /></div></div> }
+        { isCSelectorOpen && <div onClick={() => this.setState({ isCSelectorOpen : false })} className="clothing-modal-container"><div className="clothing-modal"><ClothingCards {...clothingSelectorProps} /></div></div> }
       </div>
     )
   }

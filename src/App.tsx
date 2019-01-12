@@ -4,6 +4,13 @@ import './App.css';
 import Main from './container/main/main';
 import { filterByClothingType } from './utilities/helper';
 
+export interface IAddOutfitPayload {
+  headwearSelected  : IClothing;
+  topSelected       : IClothing[];
+  bottomSelected    : IClothing;
+  shoesSelected     : IClothing;
+}
+
 export interface IClothing {
   id            : number;
   name          : string;
