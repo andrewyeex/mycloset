@@ -1,8 +1,6 @@
 import * as React from 'react';
-import { IClothing } from 'src/App';
 
 interface IProps {
-  clothings : IClothing[];
   handleCardClick : (x?: string) => void;
   image : string;
   clothing_type : string;

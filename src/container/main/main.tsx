@@ -2,7 +2,8 @@ import * as React from 'react';
 import {
   CLOTHING_TYPES,
   IClothing,
-  IOutfit
+  initClothing,
+  IOutfit,
 } from '../../App'
 import AddClothing      from '../../component/addClothing/addClothing';
 import Clothing         from '../../component/clothing/clothing';
@@ -62,16 +63,7 @@ export default class Main extends React.Component<IProps, IState> {
   constructor(props: IProps){
     super(props)
     this.state = {
-      selectedClothing : {
-        id            : 0,
-        name          : '',
-        brand         : '',
-        color         : '',
-        image         : '',
-        note          : '',
-        date_bought   : '',
-        clothing_type : ''
-      },
+      selectedClothing    : initClothing,
       isClothing          : false,
       isHamburgerOpen     : false,
       isUserSettingOpen   : false,

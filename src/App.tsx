@@ -24,10 +24,10 @@ export interface IClothing {
 
 export interface IOutfit {
   id        : number;
-  headwear  : IClothing[],
+  headwear  : IClothing,
   top       : IClothing[],
-  bottom    : IClothing[],
-  shoes     : IClothing[]
+  bottom    : IClothing,
+  shoes     : IClothing
 }
 
 interface IState {
@@ -52,22 +52,35 @@ export const CLOTHING_TYPES = [
   "HEADWEAR"
 ]
 
+export const initClothing = {
+  id            : 0,
+  name          : '',
+  brand         : '',
+  color         : '',
+  image         : '',
+  note          : '',
+  date_bought   : '',
+  clothing_type : ''
+}
+
+export const initOutfit = {
+  id        : 0,
+  headwear  : initClothing,
+  top       : [initClothing],
+  bottom    : initClothing,
+  shoes     : initClothing
+}
+
 export default class App extends React.Component < {}, IState > {
   constructor(props: {}){
     super(props)
     this.state = {
-      clothings : [],
-      outfits   : [{
-        id        : 0,
-        headwear  : [],
-        top       : [],
-        bottom    : [],
-        shoes     : []
-      }],
-      headwear: [],
-      top : [],
-      bottom : [],
-      shoes : []
+      clothings : [initClothing],
+      outfits   : [initOutfit],
+      headwear  : [initClothing],
+      top       : [initClothing],
+      bottom    : [initClothing],
+      shoes     : [initClothing]
     }
   }
   public componentDidMount = () => {

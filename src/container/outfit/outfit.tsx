@@ -6,7 +6,7 @@ import {
   IOutfit,
 } from '../../App';
 import AddOutfit from '../../component/addOutfit/addOutfit';
-// import OutfitRow from '../../component/outfitRow/outfitRow';
+import DisplayOutfit from '../../component/displayOutfit/displayOutfit';
 
 import './outfit.css'
 
@@ -50,16 +50,18 @@ class Outfit extends React.Component < IProps, IState > {
   }
 
   public render(){
+
     const {
+      outfits,
       clothings,
       headwear,
       top,
       bottom,
       shoes
     } = this.props
-    const {
-      isAddOutfitOpen
-    } = this.state
+
+    const { isAddOutfitOpen } = this.state
+
     const outfitProps = {
       clothings,
       headwear,
@@ -72,9 +74,26 @@ class Outfit extends React.Component < IProps, IState > {
     return(
       <div className="row main-content">
         { isAddOutfitOpen && < AddOutfit {...outfitProps} /> }
-        {/* {clothings.map((clothing : Clothing) => <OutfitRow key={clothing.id} {...outfitProps} />)} */}
-        {/* ADD NEW OUTFIT BUTTON */}
-        {/**  <OutfitSelectorModal />  */}
+        { outfits.map(
+          (outfit) => {
+            const {
+              id,
+              shoes : sh,
+              bottom : bo,
+              top : to,
+              headwear : he
+            } = outfit
+
+            const props = {
+              id,
+              shoes : sh,
+              bottom : bo,
+              top : to,
+              headwear : he
+            }
+            return <DisplayOutfit key={id} {...props} />
+          })
+        }
       </div>
     )
   }
