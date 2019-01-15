@@ -21,6 +21,7 @@ interface IState {
   cSelectorHandler  : (x?: IClothing) => void
   cSelectorData     : IClothing[];
   headwearSelected  : IClothing;
+  topClicked        : string;
   topSelected       : IClothing[];
   bottomSelected    : IClothing;
   shoesSelected     : IClothing;
@@ -45,6 +46,7 @@ class AddOutfit extends React.PureComponent< IProps , IState > {
       cSelectorHandler  : () => alert('select a handler'),
       cSelectorData     : [initialClothing],
       headwearSelected  : initialClothing,
+      topClicked        : 'init', // string image ex: IMG123.png
       topSelected       : [initialClothing],
       bottomSelected    : initialClothing,
       shoesSelected     : initialClothing
@@ -67,12 +69,19 @@ class AddOutfit extends React.PureComponent< IProps , IState > {
     })
   }
   public handleSelectTop = (clothing: IClothing) => {
-    const { topSelected } = this.state
-    if(!!topSelected.length){
-      (topSelected[0].id === 0) ?
-        this.setState({ topSelected: [clothing] }) :
-        this.setState((prevState : IState) => ({ topSelected : [...prevState.topSelected, clothing], isCSelectorOpen : false}))
+    const { topSelected, topClicked } = this.state
+    let newTopSelected = [...this.state.topSelected]
+    if( topSelected[0].id === 0 ){ newTopSelected = [clothing] }
+    else if( !!topSelected.length && topSelected.length < 3 ){
+      if(topSelected.length === 2){
+        newTopSelected = newTopSelected.map(
+          (top : IClothing) => top.image === topClicked.split('/')[2] ? clothing : top
+        )
+      } else {
+        newTopSelected = [...newTopSelected, clothing]
+      }
     }
+    this.setState({ topSelected : newTopSelected, isCSelectorOpen : false})
   }
   public handleSelectHeadwear = (clothing: IClothing) => this.setState({ headwearSelected  :  clothing, isCSelectorOpen : false })
   public handleSelectBottom   = (clothing: IClothing) => this.setState({ bottomSelected    :  clothing, isCSelectorOpen : false })
@@ -108,11 +117,13 @@ class AddOutfit extends React.PureComponent< IProps , IState > {
     }
     const topCardProps = {
       clothings : top,
-      handleCardClick : () => {
+      handleCardClick : (x : string) => {
+        console.log({x})
         this.setState({
           cSelectorHandler : this.handleSelectTop,
           cSelectorData : top,
-          isCSelectorOpen : true
+          isCSelectorOpen : true,
+          topClicked : x
         })
       }
     }

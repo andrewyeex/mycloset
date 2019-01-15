@@ -3,7 +3,7 @@ import { IClothing } from 'src/App';
 
 interface IProps {
   clothings : IClothing[];
-  handleCardClick : (x: object) => void;
+  handleCardClick : (x?: string) => void;
   image : string;
   clothing_type : string;
 }
@@ -20,7 +20,7 @@ class ClothingCard extends React.PureComponent< IProps, {} > {
     return(
       <div
         className="clothe-card"
-        onClick={handleCardClick}>
+        onClick={()=>handleCardClick(imgSrc)}>
         <img src={imgSrc} alt="clickable image with dynamic actions" />
       </div>
     )
