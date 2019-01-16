@@ -1,0 +1,7 @@
+.display-outfit .clothe-card.deck {
+  position: absolute;
+  top: 25px;
+  left: 40px; }
+
+.display-outfit .clothe-card {
+  z-index: 0; }

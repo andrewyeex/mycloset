@@ -39,18 +39,19 @@ class DisplayOutfit extends React.PureComponent<IProps, {}>{
       handleCardClick : () => console.log('do something')
     }
     return(
-      <div className="col-12">
+      <div className="col-12 display-outfit">
         <div className="row">
           <div className="col-3" >
             <ClothingCard {...headwearCardProps} />
           </div>
           <div className="col-3" >
             { top.map(
-              (t : IClothing) => {
+              (t : IClothing, i) => {
                 const topCardProps = {
                   image: !!t && t.image,
                   clothing_type: !!t && t.clothing_type,
-                  handleCardClick : () => console.log('do something')
+                  handleCardClick : () => console.log('do something'),
+                  index: i
                 }
                 return <ClothingCard key={t.id} {...topCardProps} />
               })

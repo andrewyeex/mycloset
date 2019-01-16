@@ -13,7 +13,8 @@
     width: 100vw;
     background: #141414e6; }
     .clothing-modal-container .clothing-modal .clothe-card {
-      flex: none; }
+      flex: none;
+      z-index: 1; }
 
 #outfit-submit-cancel {
   height: 100%;
