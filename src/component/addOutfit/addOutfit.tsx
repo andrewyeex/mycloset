@@ -5,6 +5,7 @@ import {
 } from '../../App'
 import ClothingCard from '../clothingCard/clothingCard';
 import ClothingCards from '../clothingCards/clothingCards';
+import Modal from '../modal/modal';
 import './addOutfit.css';
 
 interface IProps {
@@ -52,6 +53,7 @@ class AddOutfit extends React.PureComponent< IProps , IState > {
       shoesSelected     : initialClothing
     }
   }
+
   public setSelector = (handler: ()=>void, data : IClothing[]) => this.setState({ cSelectorHandler: handler, cSelectorData : data  })
   public handleSubmitOutfit = () => {
     const { handleSubmitOutfit } = this.props
@@ -184,7 +186,19 @@ class AddOutfit extends React.PureComponent< IProps , IState > {
             </div>
           </div>
         </div>
-        { isCSelectorOpen && <div onClick={() => this.setState({ isCSelectorOpen : false })} className="clothing-modal-container"><div className="clothing-modal"><ClothingCards {...clothingSelectorProps} /></div></div> }
+        { isCSelectorOpen &&
+          <Modal>
+            <div
+              onClick={
+                () => this.setState({ isCSelectorOpen : false })
+              }
+              className="clothing-modal-container">
+              <div className="clothing-modal">
+                <ClothingCards {...clothingSelectorProps} />
+              </div>
+            </div>
+          </Modal>
+        }
       </div>
     )
   }
