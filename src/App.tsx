@@ -136,6 +136,7 @@ export default class App extends React.Component < {}, IState > {
     return (
       <div className="container-fluid">
         <Main {...mainProps} />
+        <div id="modal-container" />
       </div>
     );
   }

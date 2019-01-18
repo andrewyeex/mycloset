@@ -78,17 +78,17 @@ class Outfit extends React.Component < IProps, IState > {
           (outfit) => {
             const {
               id,
-              shoes : sh,
-              bottom : bo,
-              top : to,
+              shoes    : sh,
+              bottom   : bo,
+              top      : to,
               headwear : he
             } = outfit
 
             const props = {
               id,
-              shoes : sh,
-              bottom : bo,
-              top : to,
+              shoes    : sh,
+              bottom   : bo,
+              top      : to,
               headwear : he
             }
             return <DisplayOutfit key={id} {...props} />
