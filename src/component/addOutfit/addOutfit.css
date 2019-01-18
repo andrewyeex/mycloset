@@ -1,4 +1,4 @@
-.clothing-modal-container {
+#modal-container .clothing-modal-container {
   height: 100vh;
   position: fixed;
   display: flex;
@@ -7,25 +7,33 @@
   top: 0;
   left: 0;
   background: #00000033; }
-  .clothing-modal-container .clothing-modal {
+  #modal-container .clothing-modal-container .clothing-modal {
     display: flex;
     overflow-x: scroll;
     width: 100vw;
     background: #141414e6; }
-    .clothing-modal-container .clothing-modal .clothe-card {
-      flex: none; }
+    #modal-container .clothing-modal-container .clothing-modal .clothe-card {
+      flex: none;
+      border-radius: 3px;
+      margin: 40px;
+      height: 325px;
+      width: 225px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden; }
 
-#outfit-submit-cancel {
+#modal-container #outfit-submit-cancel {
   height: 100%;
   display: flex;
   justify-content: center;
   align-items: center; }
-  #outfit-submit-cancel .row div {
+  #modal-container #outfit-submit-cancel .row div {
     color: white;
     margin: 5px 0px; }
-  #outfit-submit-cancel .row div:hover {
+  #modal-container #outfit-submit-cancel .row div:hover {
     cursor: pointer; }
-  #outfit-submit-cancel .row div:first-child {
+  #modal-container #outfit-submit-cancel .row div:first-child {
     background: #38cb38; }
-  #outfit-submit-cancel .row div:last-child {
+  #modal-container #outfit-submit-cancel .row div:last-child {
     background: #ff6767; }

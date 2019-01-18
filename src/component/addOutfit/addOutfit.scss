@@ -1,46 +1,49 @@
-.clothing-modal-container {
-  height: 100vh;
-  position: fixed;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  top: 0;
-  left: 0;
-  background: #00000033;
-  .clothing-modal {
+#modal-container {
+  .clothing-modal-container {
+    height: 100vh;
+    position: fixed;
     display: flex;
-    overflow-x: scroll;
-    width: 100vw;
-    background: #141414e6;
-    .clothe-card {
-      flex: none;
-      border-radius: 3px;
-      margin: 40px;
-      height: 325px;
-      width: 225px;
+    justify-content: center;
+    align-items: center;
+    top: 0;
+    left: 0;
+    background: #00000033;
+    .clothing-modal {
       display: flex;
-      justify-content: center;
-      align-items: center;
-      overflow: hidden;
+      overflow-x: scroll;
+      width: 100vw;
+      background: #141414e6;
+      .clothe-card {
+        flex: none;
+        border-radius: 3px;
+        margin: 40px;
+        height: 325px;
+        width: 225px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+      }
+    }
+  }
+  #outfit-submit-cancel {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .row {
+      div {
+        color: white;
+        margin: 5px 0px;
+      }
+      div:hover { cursor: pointer; }
+      div:first-child {
+        background: #38cb38;
+      }
+      div:last-child {
+        background: #ff6767;
+      }
     }
   }
 }
-#outfit-submit-cancel {
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  .row {
-    div {
-      color: white;
-      margin: 5px 0px;
-    }
-    div:hover { cursor: pointer; }
-    div:first-child {
-      background: #38cb38;
-    }
-    div:last-child {
-      background: #ff6767;
-    }
-  }
-}
+
