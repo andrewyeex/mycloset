@@ -43,26 +43,7 @@ class Outfit extends React.Component < IMainContext, IState > {
     return(
       <div className="row main-content">
         { isAddOutfitOpen && < AddOutfit {...outfitProps} /> }
-        { outfits.map(
-          (outfit) => {
-            const {
-              id,
-              shoes : sh,
-              bottom : bo,
-              top : to,
-              headwear : he
-            } = outfit
-
-            const props = {
-              id,
-              shoes : sh,
-              bottom : bo,
-              top : to,
-              headwear : he
-            }
-            return <DisplayOutfit key={id} {...props} />
-          })
-        }
+        { outfits.map((outfit) => <DisplayOutfit key={outfit.id} {...outfit} />)}
       </div>
     )
   }
