@@ -1,9 +1,9 @@
 import * as React from 'react';
+import OutfitWrapper from 'src/component/outfitWrapper/outfitWrapper';
 import {
   CLOTHING_TYPES,
   IClothing,
-  initClothing,
-  IOutfit,
+  initClothing
 } from '../../App'
 import AddClothing      from '../../component/addClothing/addClothing';
 import Clothing         from '../../component/clothing/clothing';
@@ -13,7 +13,6 @@ import HamburgerIcon    from '../../component/hamburgerIcon/hamburgerIcon';
 import Title            from '../../component/title/title';
 import UserSetting      from '../../component/userSetting/userSetting';
 import UserSettingIcon  from '../../component/userSettingIcon/userSettingIcon';
-import Outfit           from '../outfit/outfit';
 import './main.css';
 
 
@@ -32,11 +31,6 @@ const stateArr = [
 
 interface IProps {
   clothings : IClothing[];
-  outfits   : IOutfit[];
-  headwear  : IClothing[];
-  top       : IClothing[];
-  bottom    : IClothing[];
-  shoes     : IClothing[];
 }
 
 interface IState {
@@ -138,13 +132,6 @@ export default class Main extends React.Component<IProps, IState> {
   })
 
   public render(){
-    const {
-      outfits,
-      headwear,
-      top,
-      bottom,
-      shoes
-    } = this.props
 
     const {
       clothings,
@@ -201,15 +188,6 @@ export default class Main extends React.Component<IProps, IState> {
       handleOpenAddClothing   : this.handleOpenAddClothing
     }
 
-    const outfitProps = {
-      clothings,
-      outfits,
-      headwear,
-      top,
-      bottom,
-      shoes
-    }
-
     return(
       <div id="main" className="container-fluid">
         <div className="row top-bar">
@@ -224,7 +202,7 @@ export default class Main extends React.Component<IProps, IState> {
         { isAddClothingOpen   && <AddClothing   {...addClothingProps  } /> }
         { isEditClothingOpen  && <EditClothing  {...editClothingProps } /> }
         { isClothing  && isClothingOpen && <Clothing  {...clothingProps } /> }
-        { !isClothing && isClothingOpen && <Outfit    {...outfitProps   } /> }
+        { !isClothing && isClothingOpen && <OutfitWrapper /> }
       </div>
     )
   }

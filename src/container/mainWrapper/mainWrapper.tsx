@@ -7,7 +7,7 @@ import Main from '../main/main';
 import { MainContext } from '../mainProvider/mainProvider';
 
 
-interface IMainContext {
+export interface IMainContext {
   clothings : IClothing[],
   outfits   : IOutfit[],
   headwear  : IClothing[];
@@ -28,19 +28,7 @@ class MainWrapper extends React.PureComponent < {}, {} > {
             top,
             bottom,
             shoes
-          } : IMainContext) =>
-          <Main
-            {
-              ...{
-                clothings,
-                outfits,
-                headwear,
-                top,
-                bottom,
-                shoes
-              }
-            }
-          />
+          } : IMainContext) => <Main {...{clothings}} />
         }
       </MainContext.Consumer>
     )
