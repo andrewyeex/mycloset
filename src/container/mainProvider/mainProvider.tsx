@@ -1,12 +1,12 @@
 import axios from 'axios';
 import * as React from 'react';
-import { filterByClothingType } from '../../utilities/helper';
 import {
+  IClothing,
   initClothing,
   initOutfit,
-  IClothing,
   IOutfit
 } from '../../App'
+import { filterByClothingType } from '../../utilities/helper';
 
 export const MainContext = React.createContext({});
 
@@ -63,7 +63,7 @@ export default class MainProvider extends React.Component < {}, IState > {
       })
     }));
   }
-  render(){
+  public render(){
     const {
       clothings,
       outfits,

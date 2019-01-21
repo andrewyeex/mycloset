@@ -1,8 +1,7 @@
 import * as React from 'react';
-import './App.css';
-import Main from './container/main/main';
-// import MainProvider from './container/mainProvider/mainProvider';
-import { MainContext } from './container/mainProvider/mainProvider';
+// import './App.css';
+import MainProvider from './container/mainProvider/mainProvider';
+import MainWrapper from './container/mainWrapper/mainWrapper';
 
 export interface IAddOutfitPayload {
   headwearSelected  : IClothing;
@@ -64,31 +63,12 @@ export const initOutfit = {
 
 export default class App extends React.Component < {}, {} > {
   public render() {
-    const {
-      clothings,
-      outfits,
-      headwear,
-      top,
-      bottom,
-      shoes
-    } = this.context
     return (
       <div className="container-fluid">
-        <Main
-          {
-            ...{
-              clothings,
-              outfits,
-              headwear,
-              top,
-              bottom,
-              shoes
-            }
-          }
-        />
+        <MainProvider>
+          <MainWrapper />
+        </MainProvider>
       </div>
     );
   }
 }
-
-App.contextType = MainContext;
