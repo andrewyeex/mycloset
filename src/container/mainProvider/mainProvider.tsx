@@ -1,6 +1,7 @@
 import axios from 'axios';
 import * as React from 'react';
 import {
+  IAddOutfitPayload,
   IClothing,
   initClothing,
   initOutfit,
@@ -63,6 +64,23 @@ export default class MainProvider extends React.Component < {}, IState > {
       })
     }));
   }
+
+  public handleSubmitOutfit = (outfitPayload : IAddOutfitPayload) => {
+    const {
+      headwearSelected,
+      topSelected,
+      bottomSelected,
+      shoesSelected
+    } = outfitPayload
+    const payload = {
+      headwear  : headwearSelected.id,
+      top       : topSelected.map(t => t.id).join(','),
+      bottom    : bottomSelected.id,
+      shoes     : shoesSelected.id
+    }
+    axios.post('http://localhost:4000/outfits/', payload).then(res => console.log({res}))
+  }
+
   public render(){
     const {
       clothings,
@@ -75,6 +93,7 @@ export default class MainProvider extends React.Component < {}, IState > {
     return(
       <MainContext.Provider
         value={{
+          handleSubmitOutfit : this.handleSubmitOutfit,
           clothings,
           outfits,
           headwear,

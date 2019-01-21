@@ -1,52 +1,21 @@
-import axios from 'axios';
 import * as React from 'react';
 import {
-  IAddOutfitPayload,
-  IClothing,
-  IOutfit,
+  IMainContext,
 } from '../../App';
 import AddOutfit from '../../component/addOutfit/addOutfit';
 import DisplayOutfit from '../../component/displayOutfit/displayOutfit';
 
 import './outfit.css'
-
-interface IProps {
-  outfits       : IOutfit[];
-  clothings     : IClothing[];
-  headwear      : IClothing[];
-  top           : IClothing[];
-  bottom        : IClothing[];
-  shoes         : IClothing[];
-}
 interface IState {
   isModalContainerOpen : boolean;
   isAddOutfitOpen      : boolean;
 }
 
-class Outfit extends React.Component < IProps, IState > {
-  constructor(props: IProps){
-    super(props)
-    this.state = {
-      isModalContainerOpen  : false,
-      isAddOutfitOpen       : true,
-      // handleClothingSelected : (clothing: Clothing) => alert('select something')
-    }
-  }
+class Outfit extends React.Component < IMainContext, IState > {
 
-  public handleSubmitOutfit = (outfitPayload : IAddOutfitPayload) => {
-    const {
-      headwearSelected,
-      topSelected,
-      bottomSelected,
-      shoesSelected
-    } = outfitPayload
-    const payload = {
-      headwear  : headwearSelected.id,
-      top       : topSelected.map(t => t.id).join(','),
-      bottom    : bottomSelected.id,
-      shoes     : shoesSelected.id
-    }
-    axios.post('http://localhost:4000/outfits/', payload).then(res => console.log({res}))
+  public state = {
+    isModalContainerOpen  : false,
+    isAddOutfitOpen       : true,
   }
 
   public render(){
@@ -68,7 +37,7 @@ class Outfit extends React.Component < IProps, IState > {
       top,
       bottom,
       shoes,
-      handleSubmitOutfit : this.handleSubmitOutfit
+      handleSubmitOutfit : this.props.handleSubmitOutfit
     }
 
     return(

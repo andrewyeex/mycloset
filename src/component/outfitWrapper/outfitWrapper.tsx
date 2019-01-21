@@ -1,6 +1,6 @@
 import * as React from 'react';
+import { IMainContext } from '../../App';
 import { MainContext } from '../../container/mainProvider/mainProvider';
-import { IMainContext } from '../../container/mainWrapper/mainWrapper';
 import Outfit from '../../container/outfit/outfit';
 
 class OutfitWrapper extends React.PureComponent< {}, {} > {
@@ -9,6 +9,7 @@ class OutfitWrapper extends React.PureComponent< {}, {} > {
       <MainContext.Consumer>
         {
           ({
+            handleSubmitOutfit,
             clothings,
             outfits,
             headwear,
@@ -19,6 +20,7 @@ class OutfitWrapper extends React.PureComponent< {}, {} > {
           <Outfit
             {
               ...{
+                handleSubmitOutfit,
                 clothings,
                 outfits,
                 headwear,

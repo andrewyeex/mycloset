@@ -3,6 +3,15 @@ import * as React from 'react';
 import MainProvider from './container/mainProvider/mainProvider';
 import MainWrapper from './container/mainWrapper/mainWrapper';
 
+export interface IMainContext {
+  handleSubmitOutfit : (x : IAddOutfitPayload) => void;
+  clothings : IClothing[],
+  outfits   : IOutfit[],
+  headwear  : IClothing[];
+  top       : IClothing[];
+  bottom    : IClothing[];
+  shoes     : IClothing[];
+}
 export interface IAddOutfitPayload {
   headwearSelected  : IClothing;
   topSelected       : IClothing[];
